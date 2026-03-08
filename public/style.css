@@ -1,0 +1,59 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    min-height: 100vh;
+    width: 100%;
+}
+
+body {
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+form>div {
+    max-width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+label {
+    padding-left: 10px;
+    font-size: 16px;
+}
+
+input {
+    width: 200px;
+    height: 50px;
+    padding-left: 10px;
+    font-size: 16px;
+    font-family: 'Courier New', Courier, monospace;
+
+}
+
+select {
+    width: 200px;
+    height: 50px;
+    padding-left: 10px;
+    font-size: 16px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+option {
+    border: 1px solid #000;
+}
+
+form>div:last-child {
+    display: flex;
+    padding-top: 10px;
+    justify-content: flex-end;
+}
+
+form button {
+    font-size: 18px;
+    padding: 5px 8px;
+}

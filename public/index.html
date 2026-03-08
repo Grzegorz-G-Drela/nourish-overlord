@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nourish Overlord</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./app.js"></script>
+    <script src="../server.js"></script>
+</head>
+
+<body>
+    <form>
+        <div>
+            <label for="name">Name</label>
+            <input type="text" id="name">
+        </div>
+        <div>
+            <label for="age">Age</label>
+            <input type="number" id="age">
+        </div>
+        <div>
+            <label for="weight">Weight (kg)</label>
+            <input type="number" id="weight">
+        </div>
+        <div>
+            <label for="height">Height (cm)</label>
+            <input type="number" id="height">
+        </div>
+        <div>
+            <label for="goal">Goal</label>
+            <select id="goal">
+                <option value="lose">Lose weight</option>
+                <option value="maintain">Maintain weight</option>
+                <option value="gain">Gain weight</option>
+            </select>
+        </div>
+        <div>
+            <label for="activity-level">Activity<br>Level</label>
+            <select id="activity-level">
+                <option value="sedentary">Sedentary</option>
+                <option value="light">Light</option>
+                <option value="moderate">Moderate</option>
+                <option value="active">Active</option>
+            </select>
+        </div>
+        <div><button>SUBMIT</button></div>
+    </form>
+</body>
+
+</html>

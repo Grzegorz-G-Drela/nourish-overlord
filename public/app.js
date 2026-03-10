@@ -1,5 +1,6 @@
 const form = document.querySelector('form');
 const username = document.querySelector('#username');
+const gender = document.querySelector('#gender');
 const age = document.querySelector('#age');
 const weight = document.querySelector('#weight');
 const height = document.querySelector('#height');
@@ -10,6 +11,7 @@ let storedProfile = localStorage.getItem('profile');
 let profile = JSON.parse(storedProfile) || {};
 if (profile.username) {
     username.value = profile.username;
+    gender.value = profile.gender;
     age.value = profile.age;
     weight.value = profile.weight;
     height.value = profile.height;
@@ -22,6 +24,7 @@ form.addEventListener('submit', (e) => {
     profile = {};
 
     profile.username = username.value;
+    profile.gender = gender.value;
     profile.age = age.value;
     profile.weight = weight.value;
     profile.height = height.value;

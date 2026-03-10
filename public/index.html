@@ -2,51 +2,113 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nourish Overlord</title>
-    <link rel="stylesheet" href="./style.css">
-    <script src="./app.js"></script>
-    <script src="../server.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nourish Overlord</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js"></script>
 </head>
 
 <body>
-    <form>
+
+  <header>
+    <h1>Nourish Overlord</h1>
+  </header>
+
+  <main>
+
+    <!-- SECTION 1: Profile -->
+    <section id="profile-section">
+      <h2>Your Profile</h2>
+      <form id="profile-form">
         <div>
-            <label for="name">Name</label>
-            <input type="text" id="name">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your name">
         </div>
         <div>
-            <label for="age">Age</label>
-            <input type="number" id="age">
+          <label for="age">Age</label>
+          <input type="number" id="age" placeholder="Years">
         </div>
         <div>
-            <label for="weight">Weight (kg)</label>
-            <input type="number" id="weight">
+          <label for="weight">Weight (kg)</label>
+          <input type="number" id="weight" placeholder="kg">
         </div>
         <div>
-            <label for="height">Height (cm)</label>
-            <input type="number" id="height">
+          <label for="height">Height (cm)</label>
+          <input type="number" id="height" placeholder="cm">
         </div>
         <div>
-            <label for="goal">Goal</label>
-            <select id="goal">
-                <option value="lose">Lose weight</option>
-                <option value="maintain">Maintain weight</option>
-                <option value="gain">Gain weight</option>
-            </select>
+          <label for="goal">Goal</label>
+          <select id="goal">
+            <option value="lose">Lose weight</option>
+            <option value="maintain">Maintain weight</option>
+            <option value="gain">Gain weight</option>
+          </select>
         </div>
         <div>
-            <label for="activity-level">Activity<br>Level</label>
-            <select id="activity-level">
-                <option value="sedentary">Sedentary</option>
-                <option value="light">Light</option>
-                <option value="moderate">Moderate</option>
-                <option value="active">Active</option>
-            </select>
+          <label for="activity-level">Activity Level</label>
+          <select id="activity-level">
+            <option value="sedentary">Sedentary</option>
+            <option value="light">Light</option>
+            <option value="moderate">Moderate</option>
+            <option value="active">Active</option>
+          </select>
         </div>
-        <div><button>SUBMIT</button></div>
-    </form>
+        <button type="submit">Save Profile</button>
+      </form>
+    </section>
+
+    <!-- SECTION 2: Dashboard -->
+    <section id="dashboard-section">
+      <h2>Today's Dashboard</h2>
+      <div id="calorie-target">Daily Target: <span>-- kcal</span></div>
+      <div id="calories-consumed">Consumed: <span>0 kcal</span></div>
+      <div id="calories-burned">Burned: <span>0 kcal</span></div>
+      <div id="calories-remaining">Remaining: <span>-- kcal</span></div>
+    </section>
+
+    <!-- SECTION 3: Meal Log -->
+    <section id="meal-section">
+      <h2>Log a Meal</h2>
+      <div>
+        <input type="text" id="meal-input" placeholder="e.g. 2 eggs and toast">
+        <button id="log-meal-btn">Log Meal</button>
+      </div>
+      <ul id="meal-list">
+        <!-- meals appear here -->
+      </ul>
+    </section>
+
+    <!-- SECTION 4: Activity Log -->
+    <section id="activity-section">
+      <h2>Log Activity</h2>
+      <div>
+        <input type="text" id="activity-input" placeholder="e.g. 30 min run">
+        <button id="log-activity-btn">Log Activity</button>
+      </div>
+      <ul id="activity-list">
+        <!-- activities appear here -->
+      </ul>
+    </section>
+
+    <!-- SECTION 5: Daily Summary -->
+    <section id="summary-section">
+      <h2>Daily Summary</h2>
+      <div id="summary-content">
+        <p>No data yet.</p>
+      </div>
+    </section>
+
+    <!-- SECTION 6: Save / Load -->
+    <section id="save-load-section">
+      <h2>Save / Load Data</h2>
+      <button id="save-btn">Download My Data</button>
+      <button id="load-btn">Load Data File</button>
+      <input type="file" id="file-input" accept=".json">
+    </section>
+
+  </main>
+
 </body>
 
 </html>

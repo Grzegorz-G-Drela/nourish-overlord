@@ -4,56 +4,127 @@
     margin: 0;
 }
 
-html {
-    min-height: 100vh;
-    width: 100%;
-}
-
 body {
-    width: 100%;
     font-family: Arial, Helvetica, sans-serif;
+    background-color: #f0f5ff;
+    color: #1a1a2e;
 }
 
-form>div {
-    max-width: 300px;
+header {
+    background-color: #2563eb;
+    color: white;
+    padding: 20px 40px;
+}
+
+header h1 {
+    font-size: 24px;
+}
+
+main {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+section {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+    color: #2563eb;
+}
+
+form > div {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 12px;
 }
 
 label {
-    padding-left: 10px;
-    font-size: 16px;
+    font-size: 15px;
+    width: 160px;
 }
 
-input {
-    width: 200px;
-    height: 50px;
-    padding-left: 10px;
-    font-size: 16px;
-    font-family: 'Courier New', Courier, monospace;
-
+input, select {
+    width: 260px;
+    height: 40px;
+    padding: 0 10px;
+    font-size: 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
 }
 
-select {
-    width: 200px;
-    height: 50px;
-    padding-left: 10px;
-    font-size: 16px;
-    font-family: 'Courier New', Courier, monospace;
+button {
+    margin-top: 16px;
+    padding: 10px 20px;
+    font-size: 15px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
-option {
-    border: 1px solid #000;
+button:hover {
+    background-color: #1d4ed8;
 }
 
-form>div:last-child {
+#dashboard-section > div {
+    font-size: 15px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f5ff;
+}
+
+#meal-section > div,
+#activity-section > div {
     display: flex;
-    padding-top: 10px;
-    justify-content: flex-end;
+    gap: 10px;
 }
 
-form button {
-    font-size: 18px;
-    padding: 5px 8px;
+#meal-section input,
+#activity-section input {
+    flex: 1;
+    width: auto;
+}
+
+#meal-section button,
+#activity-section button {
+    margin-top: 0;
+    white-space: nowrap;
+}
+
+ul {
+    margin-top: 16px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#save-load-section {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#save-load-section h2 {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+#file-input {
+    width: auto;
+    height: auto;
+    border: none;
+    padding: 0;
 }

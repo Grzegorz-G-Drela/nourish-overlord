@@ -1,4 +1,3 @@
-
 const calculateCalories = (profile) => {
     let basalMetabolicRate;
 
@@ -20,4 +19,3 @@ const calculateCalories = (profile) => {
     return totalDailyCalories;
 }
 
-module.exports = calculateCalories;

@@ -32,5 +32,7 @@ form.addEventListener('submit', (e) => {
     profile.activityLevel = activityLevel.value;
 
     localStorage.setItem('profile', JSON.stringify(profile));
+    const totalDailyCalories = calculateCalories(profile);
+    console.log(totalDailyCalories);
 });
 

@@ -34,5 +34,8 @@ form.addEventListener('submit', (e) => {
     localStorage.setItem('profile', JSON.stringify(profile));
     const totalDailyCalories = calculateCalories(profile);
     console.log(totalDailyCalories);
+
+    const calorieTarget = document.querySelector('#calorie-target');
+    calorieTarget.textContent = 'Daily Target: ' + totalDailyCalories + ' kcal';
 });
 

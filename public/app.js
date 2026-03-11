@@ -6,6 +6,7 @@ const weight = document.querySelector('#weight');
 const height = document.querySelector('#height');
 const goal = document.querySelector('#goal');
 const activityLevel = document.querySelector('#activity-level');
+const calorieTarget = document.querySelector('#calorie-target');
 
 let storedProfile = localStorage.getItem('profile');
 let profile = JSON.parse(storedProfile) || {};
@@ -17,6 +18,9 @@ if (profile.username) {
     height.value = profile.height;
     goal.value = profile.goal;
     activityLevel.value = profile.activityLevel;
+
+    const totalDailyCalories = calculateCalories(profile);
+    calorieTarget.textContent = 'Daily Target: ' + totalDailyCalories + ' kcal';
 }
 
 form.addEventListener('submit', (e) => {
@@ -35,7 +39,6 @@ form.addEventListener('submit', (e) => {
     const totalDailyCalories = calculateCalories(profile);
     console.log(totalDailyCalories);
 
-    const calorieTarget = document.querySelector('#calorie-target');
     calorieTarget.textContent = 'Daily Target: ' + totalDailyCalories + ' kcal';
 });
 

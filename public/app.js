@@ -1,3 +1,5 @@
+// 
+
 const form = document.querySelector('form');
 const username = document.querySelector('#username');
 const gender = document.querySelector('#gender');
@@ -7,6 +9,13 @@ const height = document.querySelector('#height');
 const goal = document.querySelector('#goal');
 const activityLevel = document.querySelector('#activity-level');
 const calorieTarget = document.querySelector('#calorie-target');
+
+const fields = ['username', 'gender', 'age', 'weight', 'height', 'goal', 'activityLevel'];
+
+function updateTotalCalories(profile) {
+    const totalDailyCalories = calculateCalories(profile);
+    calorieTarget.textContent = 'Daily Target: ' + totalDailyCalories + ' kcal';
+}
 
 let storedProfile = localStorage.getItem('profile');
 let profile = JSON.parse(storedProfile) || {};
@@ -19,8 +28,11 @@ if (profile.username) {
     goal.value = profile.goal;
     activityLevel.value = profile.activityLevel;
 
-    const totalDailyCalories = calculateCalories(profile);
-    calorieTarget.textContent = 'Daily Target: ' + totalDailyCalories + ' kcal';
+    fields.forEach(field => {
+        field.value = profile[field];
+    })
+
+    updateTotalCalories(profile);
 }
 
 form.addEventListener('submit', (e) => {
@@ -36,9 +48,7 @@ form.addEventListener('submit', (e) => {
     profile.activityLevel = activityLevel.value;
 
     localStorage.setItem('profile', JSON.stringify(profile));
-    const totalDailyCalories = calculateCalories(profile);
+    updateTotalCalories(profile);
     console.log(totalDailyCalories);
-
-    calorieTarget.textContent = 'Daily Target: ' + totalDailyCalories + ' kcal';
+    
 });
-

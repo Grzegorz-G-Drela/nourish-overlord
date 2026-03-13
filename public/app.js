@@ -1,42 +1,58 @@
-// load saved data from localStorage
-// calculate and display calorieTarget
-// set user data, save to localStorage
+// on page load:
+    // load saved data from localStorage (if not empty)
+    // calculate and display calorieTarget
+    // set user data, save to localStorage
+    // create
+        // displayUpdate() - refresh the display with the new data (for all sections at once)
+        // deleteUpdate() - refresh the select element after the day-element deletion in Daily Sumary section
+
+
 // profile form on submit:
     // stop the page from realoading
     // collect form data into the profile object
     // save profile to localStorage
-    // update the total calories display
-// log a meal on a button click:
+    // displayUpdate()
+
+// log a meal on a form submit:
     // take the data from the input
     // fetch the data to the AI
         // what are the macros for the meal this size?
     // filter the response
-        // update Consumed calories display
-        // put the macros on the display in Daily Summary
+        // displayUpdate() - Today's Dashboard + Daily Summary
     // clear the input field
-// log activity on button click:
+
+// log activity on form submit:
     // take the data from the input
     // fetch to AI
         // what are the calories burned?
     // filter the response
         // put the name/time and calories burned down in the Daily Summary
         // update calories burned display
-// Daily summary holds the data for every day in objects
+
+// Daily summary holds the data for every day in separate objects
     // if there's an object for today, just add more to it
         // add new key:value pair to the existing today's object
         // update display
-    // else, create the object and add the EDIT and DELETE buttons
-        // DELETE on click-release, hold shorter than 3s
-            // give a short message that goes off after 5s "hold for 3s"
-            // or hold for 3s to delete and let the button do the counting, 3, 2, 1, then delete (lears some css?)
-                // deletes an objects
-                // updates the Daily Summary display
-        // EDIT click to edit the file
-            // EDIT turns to SAVE
-                // no idea how we edit, this can completely change the structure of this section, is it worth it? (seems like a really useful feature)
-            // SAVE on click (turn back to EDIT)
-                // saves the new object
-                // updates the Daily Summary display
+    // else, create the object and add EDIT and DELETE buttons, highlighting ON HOVER
+        // DELETE button
+            // on click-release, hold shorter than 3s
+                // give a short message that goes off after 5s "hold for 3s"
+            // on hold for 3s to delete and let the button do the counting, 3, 2, 1, then delete (learn some css?)
+                // move object to RECENTLY DELETED select element (need to create one too in HTML)
+                // displayUpdate(), deletedUpdate()
+        // EDIT button on click
+            // change button name to SAVE
+            // swap the display section wtih pre-filled inputs
+        // SAVE button on click 
+            // change button name back to EDIT
+            // pass new input data into day-object
+            // displayUpdate()
+
+// SAVE MY DATA button on click
+    // saves the localStorage data into a text file
+// LOAD MY DATA button on click
+    // triggers hidden file input - then load the data into the local storage
+    // displayUpdate()
 
 
 const form = document.querySelector('form');

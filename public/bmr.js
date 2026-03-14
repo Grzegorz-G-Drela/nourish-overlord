@@ -1,3 +1,12 @@
+//when called, calculateCalories(xyz) as it names suggests, calculates the total calories needed for a day for xyz profile
+    // checks for gender and sets basalMetabolicRate accordingly 
+        // more calories for men per day
+        // less for women
+    // checks the activity level
+        // sets activityMultiplier based on the activity level
+    // calculates totalDailyCalories and returns it
+
+
 const calculateCalories = (profile) => {
     let basalMetabolicRate;
 

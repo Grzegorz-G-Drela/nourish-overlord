@@ -77,9 +77,6 @@
 
 
 const profileForm = document.querySelector('#profile-form');
-const mealForm = document.querySelector('#meal-form');
-const activityForm = document.querySelector('#activity-form');
-
 const username = document.querySelector('#username');
 const gender = document.querySelector('#gender');
 const age = document.querySelector('#age');
@@ -93,15 +90,15 @@ const caloriesConsumed = document.querySelector('#calories-consumed');
 const caloriesBurned = document.querySelector('#calories-burned');
 const caloriesRemaining = document.querySelector('#calories-remaining');
 
+const mealForm = document.querySelector('#meal-form');
 const mealInput = document.querySelector('#meal-input')
+
+const activityForm = document.querySelector('#activity-form');
 const activityType = document.querySelector('#activity-type');
 const activityTime = document.querySelector('#activity-time');
 
-const fields = ['username', 'gender', 'age', 'weight', 'height', 'goal', 'activityLevel'];
 
-// ###########################################################################################################
-// ##### END OF DOM DECLARATIONS #############################################################################
-// ###########################################################################################################
+
 
 function updateTotalCalories(profile) {
     const totalDailyCalories = calculateCalories(profile);
@@ -118,10 +115,6 @@ if (profile.username) {
     height.value = profile.height;
     goal.value = profile.goal;
     activityLevel.value = profile.activityLevel;
-
-    fields.forEach(field => {
-        field.value = profile[field];
-    })
 
     updateTotalCalories(profile);
 }

@@ -95,7 +95,8 @@
       <form id="activity-form">
         <h2>Log Activity</h2>
         <div>
-          <input type="text" id="activity-input" placeholder="e.g. 30 min run">
+          <input type="text" id="activity-type" placeholder="e.g. swim">
+          <input type="text" id="activity-time" placeholder="e.g. 30 min">
           <button id="log-activity-btn">Log Activity</button>
         </div>
         <ul id="activity-list">
@@ -106,7 +107,15 @@
 
     <!-- SECTION 5: Daily Summary -->
     <section id="summary-section">
-      <h2>Daily Summary</h2>
+      <div class="top-div">
+        <h2>Daily Summary</h2>
+        <div id="recently-deleted-div">
+          <label for="recently-deleted">Deleted</label>
+          <select id="recently-deleted">
+            <option value="None">None</option>
+          </select>
+        </div>
+      </div>
       <div id="summary-content">
         <p>No data yet.</p>
       </div>
@@ -117,7 +126,7 @@
       <h2>Save / Load Data</h2>
       <button id="save-btn">Download My Data</button>
       <button id="load-btn">Load Data File</button>
-      <input type="file" id="file-input" accept=".json">
+      <!-- <input type="file" id="file-input" accept=".json"> -->
     </section>
 
   </main>

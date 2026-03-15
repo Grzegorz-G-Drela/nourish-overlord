@@ -44,7 +44,7 @@
 
 // log activity:
     // AUTO (activityForm submit):
-        // if input activityInput && if activityTime are both not empty (after trimming spaces):
+        // if input activityType && if activityTime are both not empty (after trimming spaces):
             // fetch that data to AI, inside the function asking AI to count the calories burned and name heatlh benefits
                 // if (enough information)
                     // return the [caloriesBurned, healthBenefits]
@@ -94,7 +94,8 @@ const caloriesBurned = document.querySelector('#calories-burned');
 const caloriesRemaining = document.querySelector('#calories-remaining');
 
 const mealInput = document.querySelector('#meal-input')
-const activityInput = document.querySelector('#activity-input');
+const activityType = document.querySelector('#activity-type');
+const activityTime = document.querySelector('#activity-time');
 
 const fields = ['username', 'gender', 'age', 'weight', 'height', 'goal', 'activityLevel'];
 

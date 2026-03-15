@@ -33,7 +33,7 @@ section {
     background: white;
     border-radius: 10px;
     padding: 24px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 h2 {
@@ -42,7 +42,7 @@ h2 {
     color: #2563eb;
 }
 
-form > div {
+form>div {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -54,7 +54,8 @@ label {
     width: 160px;
 }
 
-input, select {
+input,
+select {
     width: 260px;
     height: 40px;
     padding: 0 10px;
@@ -78,16 +79,24 @@ button:hover {
     background-color: #1d4ed8;
 }
 
-#dashboard-section > div {
+#dashboard-section>div {
     font-size: 15px;
     padding: 8px 0;
     border-bottom: 1px solid #f0f5ff;
 }
 
-#meal-form > div,
-#activity-form > div {
+#meal-form>div,
+#activity-form>div {
     display: flex;
     gap: 10px;
+}
+
+#summary-section .top-div {
+    display: flex;
+}
+
+#recently-deleted-div {
+    margin-left: auto;
 }
 
 #meal-section input,

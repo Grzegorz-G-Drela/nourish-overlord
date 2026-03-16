@@ -135,3 +135,11 @@ profileForm.addEventListener('submit', (e) => {
     updateTotalCalories(profile);
     
 });
+
+mealForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    meal = {};
+
+    mealInput // send whole to the AI and let it figure out what it is
+                    // if not recognized, send the msg back
+})

@@ -9,7 +9,7 @@ const PORT = 3000;
 
 app.use(express.static('public'));
 
-app.post('api/meal', (req, res) => {
+app.post('/api/meal', (req, res) => {
     // get the meal text from req.body.meal
     // pass the meal text to Anthropic API
     // get the response and pass it back to the browser

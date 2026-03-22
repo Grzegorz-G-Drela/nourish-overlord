@@ -55,13 +55,20 @@ profileForm.addEventListener('submit', (e) => {
 
     localStorage.setItem('profile', JSON.stringify(profile));
     updateTotalCalories(profile);
-    
+
 });
 
 mealForm.addEventListener('submit', (e) => {
     e.preventDefault();
     meal = {};
+    const mealDescription = mealInput.value;
+    console.log(mealDescription);
 
-    mealInput // send whole to the AI and let it figure out what it is
-                    // if not recognized, send the msg back
+    fetch('http://localhost:3000/api/meal', {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify({ mealDescription }),
+    })
+        .then(response => response.json())
+        .then(data => console.log(data))
 })

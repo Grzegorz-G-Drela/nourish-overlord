@@ -9,12 +9,35 @@ const PORT = 3000;
 
 app.use(express.static('public'));
 
-app.post('/api/meal', (req, res) => {
-    // get the meal text from req.body.meal
-    // pass the meal text to Anthropic API
-    // get the response and pass it back to the browser
+async function getMealMacros(userInput) {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+            'x-api-key': process.env.ANTHROPIC_API_KEY,
+            'anthropic-version': '2023-06-01',
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            model: 'claude-haiku-4-5-20251001',
+            max_tokens: 1024,
+            messages: [
+                { role: 'user', content: userInput }
+            ]
+        })
+    });
+    const data = await response.json();
+    return data;
+}
+
+app.post('/api/meal', async(req, res) => {
+    console.log('hit');
+    const meal = req.body.mealDescription;
+    const macros = await getMealMacros(meal);
+    res.json(macros);
 });
 
 app.listen(PORT, function() {
     console.log('Server running on port ' + PORT);
 })
+
+// https://api.anthropic.com/v1/messages

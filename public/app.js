@@ -60,7 +60,6 @@ profileForm.addEventListener('submit', (e) => {
 
 mealForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    meal = {};
     const mealDescription = mealInput.value;
     console.log(mealDescription);
 

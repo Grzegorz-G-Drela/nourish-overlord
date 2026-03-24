@@ -61,7 +61,7 @@ profileForm.addEventListener('submit', (e) => {
 mealForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const mealDescription = mealInput.value;
-    console.log(mealDescription);
+    // console.log(mealDescription);
 
     fetch('http://localhost:3000/api/meal', {
         method: 'POST',
@@ -70,4 +70,4 @@ mealForm.addEventListener('submit', (e) => {
     })
         .then(response => response.json())
         .then(data => console.log(data))
-})
+});

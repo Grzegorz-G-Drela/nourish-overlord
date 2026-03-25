@@ -69,5 +69,23 @@ mealForm.addEventListener('submit', (e) => {
         body: JSON.stringify({ mealDescription }),
     })
         .then(response => response.json())
-        .then(data => console.log(data))
-});
+        .then(data => {
+            console.log(data);
+            let items = data.items;
+            let totalCalories = 0;
+            let totalFat = 0;
+            let totalCarbohydrates = 0;
+            let totalProteins = 0;
+
+            items.forEach(item => {
+                totalCalories += item.calories;
+                totalFat += item.fat_total_g;
+                totalCarbohydrates += item.carbohydrates_total_g;
+                totalProteins += item.protein_g;
+            });
+            
+            console.log(totalCalories, totalFat, totalCarbohydrates, totalProteins);
+        })
+    });
+    
+    

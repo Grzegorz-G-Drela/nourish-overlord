@@ -20,11 +20,38 @@ async function getMealMacros(userInput) {
     return data;
 }
 
+async function getHaikuReaction(macros) {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+            'x-api-key': process.env.ANTHROPIC_API_KEY,
+            'anthropic-version': '2023-06-01',
+            'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+            model: 'claude-haiku-4-5-20251001',
+            max_tokens: 300,
+            system: 'You are a cold, clinical robot. You analyse meal data with zero emotion. Be brief. Be unsettling.',
+            messages: [
+                { role: 'user', content: `Meal data: ${JSON.stringify(macros)}` }
+            ],
+        }),
+    });
+    const data = await response.json();
+    console.log(data);
+    return data.content[0].text;
+}
+
+
+
+
+
 app.post('/api/meal', async (req, res) => {
     console.log('hit');
     const meal = req.body.mealDescription;
     const macros = await getMealMacros(meal);
-    res.json(macros);
+    const reaction = await getHaikuReaction(macros);
+    res.json({ items: macros.items, reaction });
 });
 
 app.listen(PORT, function () {

@@ -7,10 +7,10 @@ const height = document.querySelector('#height');
 const goal = document.querySelector('#goal');
 const activityLevel = document.querySelector('#activity-level');
 
-const calorieTarget = document.querySelector('#calorie-target');
+const calorieTarget = document.querySelector('#calorie-target span');
 const caloriesConsumed = document.querySelector('#calories-consumed span');
-const caloriesBurned = document.querySelector('#calories-burned');
-const caloriesRemaining = document.querySelector('#calories-remaining');
+const caloriesBurned = document.querySelector('#calories-burned span');
+const caloriesRemaining = document.querySelector('#calories-remaining span');
 
 const mealForm = document.querySelector('#meal-form');
 const mealInput = document.querySelector('#meal-input')
@@ -71,6 +71,7 @@ mealForm.addEventListener('submit', (e) => {
         .then(response => response.json())
         .then(data => {
             console.log(data);
+            console.log(data.reaction);
             let items = data.items;
             let totalCalories = 0;
             let totalFat = 0;

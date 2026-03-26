@@ -8,7 +8,7 @@ const goal = document.querySelector('#goal');
 const activityLevel = document.querySelector('#activity-level');
 
 const calorieTarget = document.querySelector('#calorie-target');
-const caloriesConsumed = document.querySelector('#calories-consumed');
+const caloriesConsumed = document.querySelector('#calories-consumed span');
 const caloriesBurned = document.querySelector('#calories-burned');
 const caloriesRemaining = document.querySelector('#calories-remaining');
 
@@ -84,7 +84,7 @@ mealForm.addEventListener('submit', (e) => {
                 totalProteins += item.protein_g;
             });
             
-            console.log(totalCalories, totalFat, totalCarbohydrates, totalProteins);
+            caloriesConsumed.textContent = totalCalories;
         })
     });
     

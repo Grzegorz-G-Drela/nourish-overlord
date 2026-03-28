@@ -31,7 +31,7 @@ async function getHaikuReaction(macros) {
         body: JSON.stringify({
             model: 'claude-haiku-4-5-20251001',
             max_tokens: 300,
-            system: 'You are a cold, clinical robot. You analyse meal data with zero emotion. Be brief. Be unsettling.',
+            system: 'You are a COLD, clinical robot, printing text like_a_COMMAND_line. You analyse meal data, ZERO emotion. Be unsettling and super brief. 20 lines max. No markdown, no asterisks, no bullet symbols, no headers. Plain text. Use line breaks to separate points.',
             messages: [
                 { role: 'user', content: `Meal data: ${JSON.stringify(macros)}` }
             ],

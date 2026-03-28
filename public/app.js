@@ -14,6 +14,7 @@ const caloriesRemaining = document.querySelector('#calories-remaining span');
 
 const mealForm = document.querySelector('#meal-form');
 const mealInput = document.querySelector('#meal-input')
+const reactionText = document.querySelector('#reaction-text');
 
 const activityForm = document.querySelector('#activity-form');
 const activityType = document.querySelector('#activity-type');
@@ -72,6 +73,7 @@ mealForm.addEventListener('submit', (e) => {
         .then(data => {
             console.log(data);
             console.log(data.reaction);
+            console.log(JSON.stringify(data.reaction));
             let items = data.items;
             let totalCalories = 0;
             let totalFat = 0;
@@ -86,6 +88,7 @@ mealForm.addEventListener('submit', (e) => {
             });
             
             caloriesConsumed.textContent = totalCalories;
+            reactionText.textContent = data.reaction;
         })
     });
     

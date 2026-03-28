@@ -137,3 +137,7 @@ ul {
     border: none;
     padding: 0;
 }
+
+#reaction-text {
+    white-space: pre-wrap;
+}

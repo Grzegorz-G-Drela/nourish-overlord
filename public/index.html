@@ -69,25 +69,57 @@
 
     <!-- SECTION 2: Dashboard -->
     <section id="dashboard-section">
-      <h2>Today's Dashboard</h2>
-      <div id="calorie-target">Daily Target: <span>--</span> kcal</div>
-      <div id="calories-consumed">Consumed: <span>0</span> kcal</div>
-      <div id="calories-burned">Burned: <span>0</span> kcal</div>
-      <div id="calories-remaining">Remaining: <span>--</span> kcal</div>
+      <div id="dashboard-left">
+        <h2>Today's Dashboard</h2>
+        <div id="calorie-target"><span>Daily Target:</span><span>--</span><span>kcal</span></div>
+        <div id="calories-consumed"><span>Consumed:</span><span>--</span><span>kcal</span></div>
+        <div id="fat-consumed"><span>Fat:</span><span>--</span><span>g</span></div>
+        <div id="carbohydrates-consumed"><span>Carbohydrates:</span><span>--</span><span>g</span></div>
+        <div id="protein-consumed"><span>Protein:</span><span>--</span><span>g</span></div>
+        <div id="calories-burned"><span>Burned:</span><span>--</span><span>kcal</span></div>
+        <div id="calories-remaining"><span>Remaining:</span><span>--</span><span>kcal</span></div>
+      </div>
+      <fieldset id="overlord">
+        <legend>Choose your Overlord</legend>
+        <div>
+          <input type="radio" name="overlord" id="default">
+          <label for="default">Default</label>
+        </div>
+        <div>
+          <input type="radio" name="overlord" id="robot" checked>
+          <label for="robot">Robot</label>
+        </div>
+        <div>
+          <input type="radio" name="overlord" id="medieval-peasant">
+          <label for="medieval-peasant">Medieval Peasant</label>
+        </div>
+        <div>
+          <input type="radio" name="overlord" id="conspiracy-theorist">
+          <label for="conspiracy-theorist">Conspiracy Theorist</label>
+        </div>
+        <div>
+          <input type="radio" name="overlord" id="therapist">
+          <label for="therapist">Therapist</label>
+        </div>
+        <div>
+          <input type="radio" name="overlord" id="drill-sergeant">
+          <label for="drill-sergeant">Drill Sergeant</label>
+        </div>
+      </fieldset>
     </section>
 
     <!-- SECTION 3: Meal Log -->
     <section id="meal-section">
-      <form id="meal-form">
-        <h2>Log a Meal</h2>
-        <div>
-          <input type="text" id="meal-input" placeholder="e.g. 2 eggs and toast">
-          <button id="log-meal-btn">Log Meal</button>
-        </div>
-        <ul id="meal-list">
-          <!-- meals appear here -->
-        </ul>
-      </form>
+        <form id="meal-form">
+          <h2>Log a Meal</h2>
+          <div>
+            <input type="text" id="meal-input" placeholder="e.g. 2 eggs and toast">
+            <button id="log-meal-btn">Log Meal</button>
+          </div>
+          <ul id="meal-list">
+            <!-- meals appear here -->
+          </ul>
+        </form>
       <div id="reaction-box">
         <p id="reaction-text"></p>
       </div>

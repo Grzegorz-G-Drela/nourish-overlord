@@ -64,6 +64,13 @@ select {
     border-radius: 6px;
 }
 
+input[type="radio"] {
+    width: auto;
+    height: auto;
+    padding: 0;
+    border: none;
+}
+
 button {
     margin-top: 16px;
     padding: 10px 20px;
@@ -79,10 +86,46 @@ button:hover {
     background-color: #1d4ed8;
 }
 
-#dashboard-section>div {
+#dashboard-section {
+    display: flex;
+    column-gap: 50px;
+}
+
+fieldset {
+    margin: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-radius: 10px;
+}
+
+fieldset>legend {
+    font-weight: 600;
+
+}
+
+fieldset>div {
+    display: flex;
+    gap: 8px;
+}
+
+#overlord>div {
+    cursor: pointer;
+}
+
+#overlord>div>label,
+#overlord>div>input{
+    cursor: pointer;
+}
+
+#dashboard-left>div {
     font-size: 15px;
     padding: 8px 0;
     border-bottom: 1px solid #f0f5ff;
+    display: grid;
+    grid-template-columns: 160px 60px auto;
+    gap: 12px;
 }
 
 #meal-form>div,

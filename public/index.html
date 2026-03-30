@@ -82,27 +82,27 @@
       <fieldset id="overlord">
         <legend>Choose your Overlord</legend>
         <div>
-          <input type="radio" name="overlord" id="default">
+          <input type="radio" name="overlord" id="default" value="default">
           <label for="default">Default</label>
         </div>
         <div>
-          <input type="radio" name="overlord" id="robot" checked>
+          <input type="radio" name="overlord" id="robot" value="robot" checked>
           <label for="robot">Robot</label>
         </div>
         <div>
-          <input type="radio" name="overlord" id="medieval-peasant">
+          <input type="radio" name="overlord" id="medieval-peasant" value="peasant">
           <label for="medieval-peasant">Medieval Peasant</label>
         </div>
         <div>
-          <input type="radio" name="overlord" id="conspiracy-theorist">
+          <input type="radio" name="overlord" id="conspiracy-theorist" value="theorist">
           <label for="conspiracy-theorist">Conspiracy Theorist</label>
         </div>
         <div>
-          <input type="radio" name="overlord" id="therapist">
+          <input type="radio" name="overlord" id="therapist" value="therapist">
           <label for="therapist">Therapist</label>
         </div>
         <div>
-          <input type="radio" name="overlord" id="drill-sergeant">
+          <input type="radio" name="overlord" id="drill-sergeant" value="sergeant">
           <label for="drill-sergeant">Drill Sergeant</label>
         </div>
       </fieldset>
@@ -110,16 +110,16 @@
 
     <!-- SECTION 3: Meal Log -->
     <section id="meal-section">
-        <form id="meal-form">
-          <h2>Log a Meal</h2>
-          <div>
-            <input type="text" id="meal-input" placeholder="e.g. 2 eggs and toast">
-            <button id="log-meal-btn">Log Meal</button>
-          </div>
-          <ul id="meal-list">
-            <!-- meals appear here -->
-          </ul>
-        </form>
+      <form id="meal-form">
+        <h2>Log a Meal</h2>
+        <div>
+          <input type="text" id="meal-input" placeholder="e.g. 2 eggs and toast">
+          <button id="log-meal-btn">Log Meal</button>
+        </div>
+        <ul id="meal-list">
+          <!-- meals appear here -->
+        </ul>
+      </form>
       <div id="reaction-box">
         <p id="reaction-text"></p>
       </div>

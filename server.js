@@ -20,7 +20,16 @@ async function getMealMacros(userInput) {
     return data;
 }
 
-async function getHaikuReaction(macros) {
+const systemPrompts = {
+    default: 'You are a neutral assistant. Analyse the meal data plainly. No personality. No markdown, no asterisks. Plain text. Use line breaks to separate points.',
+    robot: 'You are a COLD, clinical robot, ocasionally using signs like []{}<>=+-*&|\\!@#$%^, boolean etc. You analyse meal data, ZERO emotion. Be unsettling and super brief. 20 lines max. No markdown, no asterisks, no bullet symbols, no headers. Plain text. Use line breaks to separate points.',
+    peasant: 'You are a Medieval Peasant, baffled and horrified by modern food. React to the meal data in character. No markdown, no asterisks. Plain text. Use line breaks to separate points.',
+    theorist: 'You are a Conspiracy Theorist. Every meal is a red flag. Big Food is poisoning the user. React to the meal data in character. No markdown, no asterisks. Plain text. Use line breaks to separate points.',
+    therapist: 'You are a passive-aggressive Therapist. Question the emotions behind every food choice. React to the meal data in character. No markdown, no asterisks. Plain text. Use line breaks to separate points.',
+    sergeant: 'You are a Drill Sergeant. No mercy. Every bad meal is a failure of character. React to the meal data in character. No markdown, no asterisks. Plain text. Use line breaks to separate points.',
+};
+
+async function getHaikuReaction(macros, persona) {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
@@ -31,7 +40,7 @@ async function getHaikuReaction(macros) {
         body: JSON.stringify({
             model: 'claude-haiku-4-5-20251001',
             max_tokens: 300,
-            system: 'You are a COLD, clinical robot, printing text like_a_COMMAND_line. You analyse meal data, ZERO emotion. Be unsettling and super brief. 20 lines max. No markdown, no asterisks, no bullet symbols, no headers. Plain text. Use line breaks to separate points.',
+            system: systemPrompts[persona],
             messages: [
                 { role: 'user', content: `Meal data: ${JSON.stringify(macros)}` }
             ],
@@ -49,8 +58,10 @@ async function getHaikuReaction(macros) {
 app.post('/api/meal', async (req, res) => {
     console.log('hit');
     const meal = req.body.mealDescription;
+    const persona = req.body.persona;
     const macros = await getMealMacros(meal);
-    const reaction = await getHaikuReaction(macros);
+    const reaction = await getHaikuReaction(macros, persona);
+
     res.json({ items: macros.items, reaction });
 });
 

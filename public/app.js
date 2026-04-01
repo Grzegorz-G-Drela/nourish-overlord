@@ -17,6 +17,7 @@ const caloriesRemaining = document.querySelector('#calories-remaining span:nth-c
 
 const mealForm = document.querySelector('#meal-form');
 const mealInput = document.querySelector('#meal-input')
+const imageInput = document.querySelector('#image-input');
 const reactionText = document.querySelector('#reaction-text');
 
 const activityForm = document.querySelector('#activity-form');
@@ -28,7 +29,7 @@ const activityTime = document.querySelector('#activity-time');
 
 function updateTotalCalories(profile) {
     const totalDailyCalories = calculateCalories(profile);
-    calorieTarget.textContent = Math.round(totalDailyCalories/50) * 50;
+    calorieTarget.textContent = Math.round(totalDailyCalories / 50) * 50;
 }
 
 let storedProfile = localStorage.getItem('profile');
@@ -66,6 +67,23 @@ mealForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const mealDescription = mealInput.value;
     const selectedPersona = document.querySelector('#overlord input[name="overlord"]:checked').value;
+    const imageFile = imageInput.files[0];
+    if (imageFile) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            const base64Image = reader.result.split(',')[1];
+            fetch('http://localhost:3000/api/meal', {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify({ base64Image, persona: selectedPersona }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+        };
+        reader.readAsDataURL(imageFile);
+    }
 
     fetch('http://localhost:3000/api/meal', {
         method: 'POST',
@@ -89,13 +107,12 @@ mealForm.addEventListener('submit', (e) => {
                 totalCarbohydrates += item.carbohydrates_total_g;
                 totalProteins += item.protein_g;
             });
-            
+
             caloriesConsumed.textContent = Math.round(totalCalories);
             fatConsumed.textContent = Math.round(totalFat);
             carbohydratesConsumed.textContent = Math.round(totalCarbohydrates);
             proteinConsumed.textContent = Math.round(totalProteins);
             reactionText.textContent = data.reaction;
         })
-    });
-    
-    
+});
+

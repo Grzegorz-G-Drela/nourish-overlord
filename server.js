@@ -51,14 +51,46 @@ async function getHaikuReaction(macros, persona) {
     return data.content[0].text;
 }
 
-
-
-
+async function getHaikuMealDescription(base64Image) {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+            'x-api-key': process.env.ANTHROPIC_API_KEY,
+            'anthropic-version': '2023-06-01',
+            'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+            model: 'claude-haiku-4-5-20251001',
+            max_tokens: 300,
+            messages: [
+                {
+                    role: 'user',
+                    content: [
+                        { type: 'image', source: { type: 'base64', media_type: 'image/png', data: base64Image } },
+                        { type: 'text', text: 'Describe this meal plainly. List the foods and rough portion sizes. No comentary' },
+                    ],
+                }
+            ],
+        }),
+    });
+    const data = await response.json();
+    console.log(data);
+    return data.content[0].text;
+}
 
 app.post('/api/meal', async (req, res) => {
     console.log('hit');
-    const meal = req.body.mealDescription;
     const persona = req.body.persona;
+    let meal;
+
+    if (req.body.base64Image) {
+        meal = await getHaikuMealDescription(req.body.base64Image);
+    } else {
+        meal = req.body.mealDescription;
+    }
+
+    console.log('meal description', meal);
+
     const macros = await getMealMacros(meal);
     const reaction = await getHaikuReaction(macros, persona);
 

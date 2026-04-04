@@ -15,6 +15,7 @@ const proteinConsumed = document.querySelector('#protein-consumed span:nth-child
 const caloriesBurned = document.querySelector('#calories-burned span:nth-child(2)');
 const caloriesRemaining = document.querySelector('#calories-remaining span:nth-child(2)');
 
+const overlordFieldset = document.querySelector('#overlord');
 const mealForm = document.querySelector('#meal-form');
 const mealInput = document.querySelector('#meal-input')
 const reactionText = document.querySelector('#reaction-text');
@@ -97,3 +98,7 @@ mealForm.addEventListener('submit', (e) => {
         .then(data => updateDashboard(data));
 });
 
+overlordFieldset.addEventListener('change', (e) => {
+    document.body.setAttribute('data-theme', e.target.value);
+    reactionText.textContent = '';
+})

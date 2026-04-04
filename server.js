@@ -39,7 +39,7 @@ async function getHaikuReaction(macros, persona) {
         },
         body: JSON.stringify({
             model: 'claude-haiku-4-5-20251001',
-            max_tokens: 300,
+            max_tokens: 500,
             system: systemPrompts[persona],
             messages: [
                 { role: 'user', content: `Meal data: ${JSON.stringify(macros)}` }
@@ -51,7 +51,7 @@ async function getHaikuReaction(macros, persona) {
     return data.content[0].text;
 }
 
-async function getHaikuMealDescription(base64Image) {
+async function getHaikuMealDescription(base64Image, mimeType) {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
@@ -66,8 +66,8 @@ async function getHaikuMealDescription(base64Image) {
                 {
                     role: 'user',
                     content: [
-                        { type: 'image', source: { type: 'base64', media_type: 'image/png', data: base64Image } },
-                        { type: 'text', text: 'Describe this meal plainly. List the foods and rough portion sizes. No comentary' },
+                        { type: 'image', source: { type: 'base64', media_type: mimeType, data: base64Image } },
+                        { type: 'text', text: 'List the foods and rough portion sizes in plain text only. Food items only. Ignore cutlery, napkins, decorations and condiment containers. No markdown, no bullet points, no headers. Comma separated.' },
                     ],
                 }
             ],
@@ -84,7 +84,7 @@ app.post('/api/meal', async (req, res) => {
     let meal;
 
     if (req.body.base64Image) {
-        meal = await getHaikuMealDescription(req.body.base64Image);
+        meal = await getHaikuMealDescription(req.body.base64Image, req.body.mimeType);
     } else {
         meal = req.body.mealDescription;
     }

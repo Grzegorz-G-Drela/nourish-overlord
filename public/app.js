@@ -63,6 +63,27 @@ profileForm.addEventListener('submit', (e) => {
 
 });
 
+function updateDashboard(data) {
+    let items = data.items;
+    let totalCalories = 0;
+    let totalFat = 0;
+    let totalCarbohydrates = 0;
+    let totalProteins = 0;
+
+    items.forEach(item => {
+        totalCalories += item.calories;
+        totalFat += item.fat_total_g;
+        totalCarbohydrates += item.carbohydrates_total_g;
+        totalProteins += item.protein_g;
+    });
+
+    caloriesConsumed.textContent = Math.round(totalCalories);
+    fatConsumed.textContent = Math.round(totalFat);
+    carbohydratesConsumed.textContent = Math.round(totalCarbohydrates);
+    proteinConsumed.textContent = Math.round(totalProteins);
+    reactionText.textContent = data.reaction;
+}
+
 mealForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const mealDescription = mealInput.value;
@@ -75,44 +96,20 @@ mealForm.addEventListener('submit', (e) => {
             fetch('http://localhost:3000/api/meal', {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
-                body: JSON.stringify({ base64Image, persona: selectedPersona }),
+                body: JSON.stringify({ base64Image, mimeType: imageFile.type, persona: selectedPersona }),
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-            })
+                .then(response => response.json())
+                .then(data => updateDashboard(data))
         };
         reader.readAsDataURL(imageFile);
-    }
-
-    fetch('http://localhost:3000/api/meal', {
-        method: 'POST',
-        headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify({ mealDescription: mealDescription, persona: selectedPersona }),
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            console.log(selectedPersona);
-
-            let items = data.items;
-            let totalCalories = 0;
-            let totalFat = 0;
-            let totalCarbohydrates = 0;
-            let totalProteins = 0;
-
-            items.forEach(item => {
-                totalCalories += item.calories;
-                totalFat += item.fat_total_g;
-                totalCarbohydrates += item.carbohydrates_total_g;
-                totalProteins += item.protein_g;
-            });
-
-            caloriesConsumed.textContent = Math.round(totalCalories);
-            fatConsumed.textContent = Math.round(totalFat);
-            carbohydratesConsumed.textContent = Math.round(totalCarbohydrates);
-            proteinConsumed.textContent = Math.round(totalProteins);
-            reactionText.textContent = data.reaction;
+    } else {
+        fetch('http://localhost:3000/api/meal', {
+            method: 'POST',
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify({ mealDescription, persona: selectedPersona }),
         })
+            .then(response => response.json())
+            .then(data => updateDashboard(data));
+    }
 });
 

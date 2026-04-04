@@ -4,7 +4,7 @@ const cors = require('cors');
 dotenv.config();
 const app = express();
 app.use(cors());
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json());
 const PORT = 3000;
 
 app.use(express.static('public'));
@@ -22,6 +22,7 @@ async function getMealMacros(userInput) {
 
 const systemPrompts = {
     default: 'You are a neutral assistant. Analyse the meal data plainly. No personality. No markdown, no asterisks. Plain text. Use line breaks to separate points.',
+    chef: 'You are an Angry Chef. Everything the user eats is an insult to cooking. React to the meal data wtih dramatic suffering and fury. No markdown, no asterisks. Plain text. Use line breaks to separate points.',
     robot: 'You are a COLD, clinical robot, ocasionally using signs like []{}<>=+-*&|\\!@#$%^, boolean etc. You analyse meal data, ZERO emotion. Be unsettling and super brief. 20 lines max. No markdown, no asterisks, no bullet symbols, no headers. Plain text. Use line breaks to separate points.',
     peasant: 'You are a Medieval Peasant, baffled and horrified by modern food. React to the meal data in character. No markdown, no asterisks. Plain text. Use line breaks to separate points.',
     theorist: 'You are a Conspiracy Theorist. Every meal is a red flag. Big Food is poisoning the user. React to the meal data in character. No markdown, no asterisks. Plain text. Use line breaks to separate points.',
@@ -51,43 +52,10 @@ async function getHaikuReaction(macros, persona) {
     return data.content[0].text;
 }
 
-async function getHaikuMealDescription(base64Image, mimeType) {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-            'x-api-key': process.env.ANTHROPIC_API_KEY,
-            'anthropic-version': '2023-06-01',
-            'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-            model: 'claude-haiku-4-5-20251001',
-            max_tokens: 300,
-            messages: [
-                {
-                    role: 'user',
-                    content: [
-                        { type: 'image', source: { type: 'base64', media_type: mimeType, data: base64Image } },
-                        { type: 'text', text: 'List the foods and rough portion sizes in plain text only. Food items only. Ignore cutlery, napkins, decorations and condiment containers. No markdown, no bullet points, no headers. Comma separated.' },
-                    ],
-                }
-            ],
-        }),
-    });
-    const data = await response.json();
-    console.log(data);
-    return data.content[0].text;
-}
-
 app.post('/api/meal', async (req, res) => {
     console.log('hit');
     const persona = req.body.persona;
-    let meal;
-
-    if (req.body.base64Image) {
-        meal = await getHaikuMealDescription(req.body.base64Image, req.body.mimeType);
-    } else {
-        meal = req.body.mealDescription;
-    }
+    let meal = req.body.mealDescription;
 
     console.log('meal description', meal);
 

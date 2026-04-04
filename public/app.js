@@ -17,7 +17,6 @@ const caloriesRemaining = document.querySelector('#calories-remaining span:nth-c
 
 const mealForm = document.querySelector('#meal-form');
 const mealInput = document.querySelector('#meal-input')
-const imageInput = document.querySelector('#image-input');
 const reactionText = document.querySelector('#reaction-text');
 
 const activityForm = document.querySelector('#activity-form');
@@ -88,28 +87,13 @@ mealForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const mealDescription = mealInput.value;
     const selectedPersona = document.querySelector('#overlord input[name="overlord"]:checked').value;
-    const imageFile = imageInput.files[0];
-    if (imageFile) {
-        const reader = new FileReader();
-        reader.onload = function () {
-            const base64Image = reader.result.split(',')[1];
-            fetch('http://localhost:3000/api/meal', {
-                method: 'POST',
-                headers: { 'Content-type': 'application/json' },
-                body: JSON.stringify({ base64Image, mimeType: imageFile.type, persona: selectedPersona }),
-            })
-                .then(response => response.json())
-                .then(data => updateDashboard(data))
-        };
-        reader.readAsDataURL(imageFile);
-    } else {
-        fetch('http://localhost:3000/api/meal', {
-            method: 'POST',
-            headers: { 'Content-type': 'application/json' },
-            body: JSON.stringify({ mealDescription, persona: selectedPersona }),
-        })
-            .then(response => response.json())
-            .then(data => updateDashboard(data));
-    }
+
+    fetch('http://localhost:3000/api/meal', {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify({ mealDescription, persona: selectedPersona }),
+    })
+        .then(response => response.json())
+        .then(data => updateDashboard(data));
 });
 

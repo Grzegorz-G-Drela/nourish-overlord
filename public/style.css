@@ -114,7 +114,7 @@ fieldset>div {
 }
 
 #overlord>div>label,
-#overlord>div>input{
+#overlord>div>input {
     cursor: pointer;
 }
 
@@ -182,4 +182,46 @@ ul {
 
 #reaction-text {
     white-space: pre-wrap;
+}
+
+section:last-child {
+    margin-bottom: 70px;
+}
+
+body[data-theme='robot'] {
+    background-color: #0d1117;
+    color: #8b949e;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body[data-theme='robot'] header {
+    background-color: #161b22;
+    border-bottom: 1px solid #30363d;
+}
+
+body[data-theme='robot'] section {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    box-shadow: none;
+}
+
+body[data-theme='robot'] h2 {
+    color: #58a6ff;
+}
+
+body[data-theme='robot'] button {
+    background-color: #21262d;
+    color: #58a6ff;
+    border: 1px solid #30363d;
+}
+
+body[data-theme='robot'] button:hover {
+    background-color: #30363d;
+}
+
+body[data-theme='robot'] input,
+body[data-theme='robot'] select {
+    background-color: #0d1117;
+    color: #8b949e;
+    border: 1px solid #30363d;
 }

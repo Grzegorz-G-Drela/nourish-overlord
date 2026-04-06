@@ -25,7 +25,7 @@ const reactionText = document.querySelector('#reaction-text');
 const activityForm = document.querySelector('#activity-form');
 const activityType = document.querySelector('#activity-type');
 const activityDuration = document.querySelector('#activity-duration');
-
+const activityList = document.querySelector('#activity-list');
 
 
 
@@ -114,6 +114,21 @@ activityForm.addEventListener('submit', (e) => {
     const activity = activityType.value;
     const duration = activityDuration.value;
 
+    function addActivity(activity, duration, burned) {
+        const addedActivity = document.createElement('li');
+        let durationConverted;
+        let date = new Date().toLocaleDateString('en-GB', {day: 'numeric', month: 'short'});
+
+        if (duration >= 60) {
+            durationConverted = `${Math.floor(duration / 60)}h ${duration % 60}m`;
+        } else {
+            durationConverted = `${duration} min`;
+        }
+
+        addedActivity.textContent = `${date}. ${activity} | ${durationConverted} | ${burned}kcal`; // add todays date in front, if multiple activities this day, just group them
+        activityList.appendChild(addedActivity);
+    }
+
     fetch('http://localhost:3000/api/burned', {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
@@ -122,8 +137,11 @@ activityForm.addEventListener('submit', (e) => {
         .then(response => response.json())
         .then(data => {
             caloriesBurned.textContent = data.burned;
+            let burned = data.burned;
+            addActivity(activity, duration, burned);
             console.log(data);
         });
+
 });
 
 overlordFieldset.addEventListener('change', (e) => {

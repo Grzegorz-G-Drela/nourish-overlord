@@ -9,17 +9,6 @@ const PORT = 3000;
 
 app.use(express.static('public'));
 
-async function getMealMacros(userInput) {
-    const response = await fetch(`https://api.calorieninjas.com/v1/nutrition?query=${userInput}`, {
-        method: 'GET',
-        headers: {
-            'X-Api-Key': process.env.CALORIE_NINJAS_KEY,
-        },
-    });
-    const data = await response.json();
-    return data;
-}
-
 const systemPrompts = {
     default: 'You are a neutral assistant. Analyse the meal data plainly. No personality. No markdown, no asterisks. Plain text. Use line breaks to separate points.',
     chef: 'You are an Angry Chef. Everything the user eats is an insult to cooking. React to the meal data wtih dramatic suffering and fury. No markdown, no asterisks. Plain text. Use line breaks to separate points.',
@@ -29,6 +18,29 @@ const systemPrompts = {
     therapist: 'You are a passive-aggressive Therapist. Question the emotions behind every food choice. React to the meal data in character. No markdown, no asterisks. Plain text. Use line breaks to separate points.',
     sergeant: 'You are a Drill Sergeant. No mercy. Every bad meal is a failure of character. React to the meal data in character. No markdown, no asterisks. Plain text. Use line breaks to separate points.',
 };
+
+async function getCaloriesBurned(activity, duration) {
+    const response = await fetch(`https://api.api-ninjas.com/v1/caloriesburned?activity=${activity}&duration=${duration}`, {
+        method: 'GET',
+        headers: {
+            'X-Api-Key': process.env.NINJAS_API_KEY,
+        },
+    });
+    const data = await response.json();
+    console.log(JSON.stringify(data));
+    return data;
+}
+
+async function getMealMacros(userInput) {
+    const response = await fetch(`https://api.calorieninjas.com/v1/nutrition?query=${userInput}`, {
+        method: 'GET',
+        headers: {
+            'X-Api-Key': process.env.NINJAS_API_KEY,
+        },
+    });
+    const data = await response.json();
+    return data;
+}
 
 async function getHaikuReaction(macros, persona) {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -52,9 +64,18 @@ async function getHaikuReaction(macros, persona) {
     return data.content[0].text;
 }
 
+app.post('/api/burned', async (req, res) => {
+    const activity = req.body.activity;
+    const duration = req.body.duration;
+    const burned = await getCaloriesBurned(activity, duration);
+
+    res.json(burned);
+});
+
 app.post('/api/meal', async (req, res) => {
     console.log('hit');
     const persona = req.body.persona;
+
     let meal = req.body.mealDescription;
 
     console.log('meal description', meal);

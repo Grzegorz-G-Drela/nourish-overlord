@@ -87,7 +87,7 @@ function updateDashboard(data) {
     fatConsumed.textContent = Math.round(totalFat);
     carbohydratesConsumed.textContent = Math.round(totalCarbohydrates);
     proteinConsumed.textContent = Math.round(totalProteins);
-    caloriesRemaining.textContent = Math.round(calorieTarget.textContent) - Math.round(totalCalories.textContent);
+    caloriesRemaining.textContent = Math.round(calorieTarget.textContent) - Math.round(totalCalories);
 
     reactionText.textContent = data.reaction;
 }
@@ -121,7 +121,7 @@ activityForm.addEventListener('submit', (e) => {
     })
         .then(response => response.json())
         .then(data => {
-            // updateDashboard(data);
+            caloriesBurned.textContent = data.burned;
             console.log(data);
         });
 });

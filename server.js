@@ -35,7 +35,7 @@ async function getMealMacros(userInput) {
     const response = await fetch(`https://api.calorieninjas.com/v1/nutrition?query=${userInput}`, {
         method: 'GET',
         headers: {
-            'X-Api-Key': process.env.NINJAS_API_KEY,
+            'X-Api-Key': process.env.CALORIE_NINJAS_API_KEY,
         },
     });
     const data = await response.json();
@@ -69,8 +69,8 @@ app.post('/api/burned', async (req, res) => {
     const duration = req.body.duration;
     const burned = await getCaloriesBurned(activity, duration);
 
-    res.json(burned);
-});
+    res.json({ burned: burned[0].total_calories });
+})
 
 app.post('/api/meal', async (req, res) => {
     console.log('hit');
@@ -84,7 +84,7 @@ app.post('/api/meal', async (req, res) => {
     const reaction = await getHaikuReaction(macros, persona);
 
     res.json({ items: macros.items, reaction });
-});
+})
 
 app.listen(PORT, function () {
     console.log('Server running on port ' + PORT);

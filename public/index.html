@@ -120,9 +120,7 @@
           <input type="text" id="meal-input" placeholder="e.g. 2 eggs and toast">
           <button id="log-meal-btn">Log Meal</button>
         </div>
-        <ul id="meal-list">
-          <!-- meals appear here -->
-        </ul>
+        
       </form>
       <div id="reaction-box">
         <p id="reaction-text"></p>
@@ -134,8 +132,8 @@
       <form id="activity-form">
         <h2>Log Activity / Time</h2>
         <div>
-          <input type="text" id="activity-type" placeholder="e.g. swim">
-          <input type="text" id="activity-time" placeholder="e.g. 30 min">
+          <input type="text" id="activity-type" placeholder="activity type">
+          <input type="number" id="activity-duration" placeholder="duration in minutes">
           <button id="log-activity-btn">Log Activity</button>
         </div>
         <ul id="activity-list">
@@ -156,7 +154,9 @@
         </div>
       </div>
       <div id="summary-content">
-        <p>No data yet.</p>
+        <ul id="meal-list">
+          <!-- meals appear here -->
+        </ul>
       </div>
     </section>
 

@@ -5,19 +5,28 @@
 }
 
 body {
+    --bg: #f0f5ff;
+    --surface: white;
+    --border: #cbd5e1;
+    --text: #1a1a2e;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #f0f5ff;
-    color: #1a1a2e;
+    background-color: var(--bg);
+    color: var(--text);
 }
 
 header {
-    background-color: #2563eb;
-    color: white;
+    background-color: var(--surface);
+    color: var(--surface);
     padding: 20px 40px;
 }
 
 header h1 {
     font-size: 24px;
+    /* background-color: var(--bg); */
+    color: var(--text);
 }
 
 main {
@@ -30,16 +39,16 @@ main {
 }
 
 section {
-    background: white;
+    background: var(--surface);
     border-radius: 10px;
     padding: 24px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px var(--border);
 }
 
 h2 {
     font-size: 18px;
     margin-bottom: 16px;
-    color: #2563eb;
+    color: var(--accent);
 }
 
 form>div {
@@ -56,11 +65,13 @@ label {
 
 input,
 select {
+    background-color: var(--bg);
+    color: var(--text);
     width: 260px;
     height: 40px;
     padding: 0 10px;
     font-size: 15px;
-    border: 1px solid #cbd5e1;
+    border: 1px solid var(--border);
     border-radius: 6px;
 }
 
@@ -75,15 +86,15 @@ button {
     margin-top: 16px;
     padding: 10px 20px;
     font-size: 15px;
-    background-color: #2563eb;
-    color: white;
+    background-color: var(--accent);
+    color: var(--surface);
     border: none;
     border-radius: 6px;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #1d4ed8;
+    background-color: var(--accent-hover);
 }
 
 #dashboard-section {
@@ -121,7 +132,7 @@ fieldset>div {
 #dashboard-left>div {
     font-size: 15px;
     padding: 8px 0;
-    border-bottom: 1px solid #f0f5ff;
+    border-bottom: 1px solid var(--border);
     display: grid;
     grid-template-columns: 160px 60px auto;
     gap: 12px;
@@ -189,39 +200,39 @@ section:last-child {
 }
 
 body[data-theme='robot'] {
-    background-color: #0d1117;
-    color: #8b949e;
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #8b949e;
+    --accent: #58a6ff;
+    --accent-hover: #30363d;
+
     font-family: 'Courier New', Courier, monospace;
-}
-
-body[data-theme='robot'] header {
-    background-color: #161b22;
-    border-bottom: 1px solid #30363d;
-}
-
-body[data-theme='robot'] section {
-    background-color: #161b22;
-    border: 1px solid #30363d;
-    box-shadow: none;
-}
-
-body[data-theme='robot'] h2 {
-    color: #58a6ff;
-}
-
-body[data-theme='robot'] button {
-    background-color: #21262d;
-    color: #58a6ff;
-    border: 1px solid #30363d;
-}
-
-body[data-theme='robot'] button:hover {
-    background-color: #30363d;
-}
-
-body[data-theme='robot'] input,
-body[data-theme='robot'] select {
-    background-color: #0d1117;
-    color: #8b949e;
-    border: 1px solid #30363d;
+    
+    h1 {
+        color: white;
+    }
+    
+    header {
+        border-bottom: 1px solid #30363d;
+    }
+    
+    button {
+        background-color: #21262d;
+        color: var(--accent);
+        border: 1px solid var(--border);
+    }
+    
+    button:hover {
+        background-color: var(--accent-hover);
+    }
+    
+    #dashboard-left>div {
+        border-bottom: 1px solid #f0f5ff;
+    }
+    
+    section {
+        box-shadow: none;
+        border: 1px solid var(--border);
+    }
 }

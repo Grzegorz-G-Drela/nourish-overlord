@@ -208,31 +208,86 @@ body[data-theme='robot'] {
     --accent-hover: #30363d;
 
     font-family: 'Courier New', Courier, monospace;
-    
+
     h1 {
         color: white;
     }
-    
+
     header {
         border-bottom: 1px solid #30363d;
     }
-    
+
     button {
         background-color: #21262d;
         color: var(--accent);
         border: 1px solid var(--border);
     }
-    
+
     button:hover {
         background-color: var(--accent-hover);
     }
-    
+
     #dashboard-left>div {
         border-bottom: 1px solid #f0f5ff;
     }
-    
+
     section {
         box-shadow: none;
         border: 1px solid var(--border);
     }
+}
+
+body[data-theme='chef'] {
+    --bg: #1a0000;
+    --surface: #2d0000;
+    --border: #8b0000;
+    --text: #ffd0d0;
+    --accent: #ff4500;
+    --accent-hover: #cc3700;
+
+    font-family: 'Georgia', serif;
+}
+
+body[data-theme='peasant'] {
+    --bg: #f5e6c8;
+    --surface: #fdf3dc;
+    --border: #c8a96e;
+    --text: #3d2b00;
+    --accent: #8b5e00;
+    --accent-hover: #6b4800;
+    
+    font-family: 'Georgia', serif;
+}
+
+body[data-theme='theorist'] {
+    --bg: #0a0f0a;
+    --surface: #0f1f0f;
+    --border: #1a4d1a;
+    --text: #00cc00;
+    --accent: #00ff00;
+    --accent-hover: #00cc00;
+
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body[data-theme='therapist'] {
+    --bg: #f5f0f8;
+    --surface: #fdfaff;
+    --border: #d4b8e0;
+    --text: #3d2952;
+    --accent: #9b59b6;
+    --accent-hover: #7d3f9e;
+    
+    font-family: 'Georgia', serif;
+}
+
+body[data-theme='sergeant'] {
+    --bg: #1a1a00;
+    --surface: #2a2a00;
+    --border: #4d4d00;
+    --text: #cccc00;
+    --accent: #999900;
+    --accent-hover: #cccc00;
+
+    font-family: 'Courier New', Courier, monospace;
 }

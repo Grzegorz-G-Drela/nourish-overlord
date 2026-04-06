@@ -18,11 +18,13 @@ const caloriesRemaining = document.querySelector('#calories-remaining span:nth-c
 const overlordFieldset = document.querySelector('#overlord');
 const mealForm = document.querySelector('#meal-form');
 const mealInput = document.querySelector('#meal-input')
+const mealList = document.querySelector('#meal-list');
+
 const reactionText = document.querySelector('#reaction-text');
 
 const activityForm = document.querySelector('#activity-form');
 const activityType = document.querySelector('#activity-type');
-const activityTime = document.querySelector('#activity-time');
+const activityDuration = document.querySelector('#activity-duration');
 
 
 
@@ -75,12 +77,18 @@ function updateDashboard(data) {
         totalFat += item.fat_total_g;
         totalCarbohydrates += item.carbohydrates_total_g;
         totalProteins += item.protein_g;
+
+        const li = document.createElement('li');
+        li.textContent = `${item.name} - ${Math.round(item.calories)} kcal`;
+        mealList.appendChild(li);
     });
 
     caloriesConsumed.textContent = Math.round(totalCalories);
     fatConsumed.textContent = Math.round(totalFat);
     carbohydratesConsumed.textContent = Math.round(totalCarbohydrates);
     proteinConsumed.textContent = Math.round(totalProteins);
+    caloriesRemaining.textContent = Math.round(calorieTarget.textContent) - Math.round(totalCalories.textContent);
+
     reactionText.textContent = data.reaction;
 }
 
@@ -95,7 +103,27 @@ mealForm.addEventListener('submit', (e) => {
         body: JSON.stringify({ mealDescription, persona: selectedPersona }),
     })
         .then(response => response.json())
-        .then(data => updateDashboard(data));
+        .then(data => {
+            updateDashboard(data);
+            console.log(data);
+        });
+});
+
+activityForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const activity = activityType.value;
+    const duration = activityDuration.value;
+
+    fetch('http://localhost:3000/api/burned', {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify({ activity, duration })
+    })
+        .then(response => response.json())
+        .then(data => {
+            // updateDashboard(data);
+            console.log(data);
+        });
 });
 
 overlordFieldset.addEventListener('change', (e) => {

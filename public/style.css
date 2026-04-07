@@ -199,6 +199,10 @@ section:last-child {
     margin-bottom: 70px;
 }
 
+#file-input {
+    display: none;
+}
+
 body[data-theme='robot'] {
     --bg: #0d1117;
     --surface: #161b22;

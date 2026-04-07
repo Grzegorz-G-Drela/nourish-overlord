@@ -19,13 +19,50 @@ const overlordFieldset = document.querySelector('#overlord');
 const mealForm = document.querySelector('#meal-form');
 const mealInput = document.querySelector('#meal-input')
 const mealList = document.querySelector('#meal-list');
-
 const reactionText = document.querySelector('#reaction-text');
 
 const activityForm = document.querySelector('#activity-form');
 const activityType = document.querySelector('#activity-type');
 const activityDuration = document.querySelector('#activity-duration');
 const activityList = document.querySelector('#activity-list');
+
+const saveBtn = document.querySelector('#save-btn');
+const loadBtn = document.querySelector('#load-btn');
+const fileInput = document.querySelector('#file-input');
+
+
+
+function saveData() {
+    const data = JSON.stringify(localStorage);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'nourish-overlord-data.json';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+saveBtn.addEventListener('click', saveData);
+
+function loadData() {
+    fileInput.click();
+}
+
+fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const data = JSON.parse(e.target.result);
+        Object.keys(data).forEach(key => {
+            localStorage.setItem(key, data[key]);
+        });
+    };
+    reader.readAsText(file);
+});
+
+loadBtn.addEventListener('click', loadData);
+
 
 
 
@@ -117,7 +154,7 @@ activityForm.addEventListener('submit', (e) => {
     function addActivity(activity, duration, burned) {
         const addedActivity = document.createElement('li');
         let durationConverted;
-        let date = new Date().toLocaleDateString('en-GB', {day: 'numeric', month: 'short'});
+        let date = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 
         if (duration >= 60) {
             durationConverted = `${Math.floor(duration / 60)}h ${duration % 60}m`;

@@ -19,6 +19,7 @@ const overlordFieldset = document.querySelector('#overlord');
 const mealForm = document.querySelector('#meal-form');
 const mealInput = document.querySelector('#meal-input')
 const mealList = document.querySelector('#meal-list');
+
 const reactionText = document.querySelector('#reaction-text');
 
 const activityForm = document.querySelector('#activity-form');
@@ -30,7 +31,22 @@ const saveBtn = document.querySelector('#save-btn');
 const loadBtn = document.querySelector('#load-btn');
 const fileInput = document.querySelector('#file-input');
 
+let meals = JSON.parse(localStorage.getItem('meals')) || [];
 
+
+//           ##########################################
+//           #############   REUSABLES   ##############
+//           ##########################################
+
+function renderMealsLI(meal) {
+    const li = document.createElement('li');
+    li.textContent = `${meal.name} - ${Math.round(meal.calories)} kcal`;
+    mealList.appendChild(li);
+}
+
+//           ##########################################
+//           ###########   SAVE / LOAD   ##############
+//           ##########################################
 
 function saveData() {
     const data = JSON.stringify(localStorage);
@@ -64,7 +80,9 @@ fileInput.addEventListener('change', (e) => {
 loadBtn.addEventListener('click', loadData);
 
 
-
+//           ##########################################
+//           #############   PROFILE   ################
+//           ##########################################
 
 function updateTotalCalories(profile) {
     const totalDailyCalories = calculateCalories(profile);
@@ -102,6 +120,10 @@ profileForm.addEventListener('submit', (e) => {
 
 });
 
+//           ########################################
+//           #############   MEALS   ################
+//           ########################################
+
 function updateDashboard(data) {
     let items = data.items;
     let totalCalories = 0;
@@ -109,15 +131,15 @@ function updateDashboard(data) {
     let totalCarbohydrates = 0;
     let totalProteins = 0;
 
-    items.forEach(item => {
-        totalCalories += item.calories;
-        totalFat += item.fat_total_g;
-        totalCarbohydrates += item.carbohydrates_total_g;
-        totalProteins += item.protein_g;
+    items.forEach(meal => {
+        totalCalories += meal.calories;
+        totalFat += meal.fat_total_g;
+        totalCarbohydrates += meal.carbohydrates_total_g;
+        totalProteins += meal.protein_g;
+        renderMealsLI(meal);
 
-        const li = document.createElement('li');
-        li.textContent = `${item.name} - ${Math.round(item.calories)} kcal`;
-        mealList.appendChild(li);
+        meals.push({ name: meal.name, calories: Math.round(meal.calories) });
+        localStorage.setItem('meals', JSON.stringify(meals));
     });
 
     caloriesConsumed.textContent = Math.round(totalCalories);
@@ -146,6 +168,11 @@ mealForm.addEventListener('submit', (e) => {
         });
 });
 
+//           ###########################################
+//           #############   ACTIVITY   ################
+//           ###########################################
+
+
 activityForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const activity = activityType.value;
@@ -162,7 +189,7 @@ activityForm.addEventListener('submit', (e) => {
             durationConverted = `${duration} min`;
         }
 
-        addedActivity.textContent = `${date}. ${activity} | ${durationConverted} | ${burned}kcal`; // add todays date in front, if multiple activities this day, just group them
+        addedActivity.textContent = `${date} | ${activity} | ${durationConverted} | ${burned}kcal`; // add todays date in front, if multiple activities this day, just group them
         activityList.appendChild(addedActivity);
     }
 
@@ -180,6 +207,10 @@ activityForm.addEventListener('submit', (e) => {
         });
 
 });
+
+//           #########################################
+//           #############   THEMES   ################
+//           #########################################
 
 overlordFieldset.addEventListener('change', (e) => {
     document.body.setAttribute('data-theme', e.target.value);

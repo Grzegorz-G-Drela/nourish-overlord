@@ -32,16 +32,23 @@ const loadBtn = document.querySelector('#load-btn');
 const fileInput = document.querySelector('#file-input');
 
 let meals = JSON.parse(localStorage.getItem('meals')) || [];
-meals.forEach(meal => renderMealsLI(meal));
+meals.forEach((meal, index) => renderMealsLI(meal, index));
 
 
 //           ##########################################
 //           #############   REUSABLES   ##############
 //           ##########################################
 
-function renderMealsLI(meal) {
+function renderMealsLI(meal, index) {
     const li = document.createElement('li');
     li.textContent = `${meal.name} - ${Math.round(meal.calories)} kcal`;
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = "Delete";
+    deleteBtn.setAttribute('data-index', index);
+    deleteBtn.style.leftMargin = "auto";
+
+    li.appendChild(deleteBtn);
     mealList.appendChild(li);
 }
 
@@ -137,7 +144,8 @@ function updateDashboard(data) {
         totalFat += meal.fat_total_g;
         totalCarbohydrates += meal.carbohydrates_total_g;
         totalProteins += meal.protein_g;
-        renderMealsLI(meal);
+        let index = meals.length - 1;
+        renderMealsLI(meal, index);
 
         meals.push({ name: meal.name, calories: Math.round(meal.calories) });
         localStorage.setItem('meals', JSON.stringify(meals));

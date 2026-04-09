@@ -32,6 +32,7 @@ const loadBtn = document.querySelector('#load-btn');
 const fileInput = document.querySelector('#file-input');
 
 let meals = JSON.parse(localStorage.getItem('meals')) || [];
+meals.forEach(meal => renderMealsLI(meal));
 
 
 //           ##########################################

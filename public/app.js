@@ -32,14 +32,14 @@ const loadBtn = document.querySelector('#load-btn');
 const fileInput = document.querySelector('#file-input');
 
 let meals = JSON.parse(localStorage.getItem('meals')) || [];
-meals.forEach((meal, index) => renderMealsLI(meal, index));
+meals.forEach((meal, index) => renderMealsLi(meal, index));
 
 
 //           ##########################################
 //           #############   REUSABLES   ##############
 //           ##########################################
 
-function renderMealsLI(meal, index) {
+function renderMealsLi(meal, index) {
     const li = document.createElement('li');
     li.textContent = `${meal.name} - ${Math.round(meal.calories)} kcal`;
 
@@ -145,7 +145,7 @@ function updateDashboard(data) {
         totalCarbohydrates += meal.carbohydrates_total_g;
         totalProteins += meal.protein_g;
         let index = meals.length - 1;
-        renderMealsLI(meal, index);
+        renderMealsLi(meal, index);
 
         meals.push({ name: meal.name, calories: Math.round(meal.calories) });
         localStorage.setItem('meals', JSON.stringify(meals));
@@ -175,6 +175,15 @@ mealForm.addEventListener('submit', (e) => {
             updateDashboard(data);
             console.log(data);
         });
+});
+
+mealList.addEventListener('click', (e) => {
+    if(e.target.tagName !== 'BUTTON') return;
+    const index = parseInt(e.target.getAttribute('data-index'));
+    meals.splice(index, 1);
+    localStorage.setItem('meals', JSON.stringify(meals));
+    mealList.innerHTML='';
+    meals.forEach((meal, i) => renderMealsLi(meal, i));
 });
 
 //           ###########################################

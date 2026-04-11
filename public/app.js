@@ -52,6 +52,7 @@ function renderMealsLi(meal, index) {
     mealList.appendChild(li);
 }
 
+
 //           ##########################################
 //           ###########   SAVE / LOAD   ##############
 //           ##########################################
@@ -132,7 +133,7 @@ profileForm.addEventListener('submit', (e) => {
 //           #############   MEALS   ################
 //           ########################################
 
-function updateDashboard(data) {
+function updateMacrosRenderMeals(data) {
     let items = data.items;
     let totalCalories = 0;
     let totalFat = 0;
@@ -146,6 +147,7 @@ function updateDashboard(data) {
         totalProteins += meal.protein_g;
         let index = meals.length - 1;
         renderMealsLi(meal, index);
+        // console.log(data);
 
         meals.push({ name: meal.name, calories: Math.round(meal.calories) });
         localStorage.setItem('meals', JSON.stringify(meals));
@@ -172,7 +174,7 @@ mealForm.addEventListener('submit', (e) => {
     })
         .then(response => response.json())
         .then(data => {
-            updateDashboard(data);
+            updateMacrosRenderMeals(data);
             console.log(data);
         });
 });

@@ -149,7 +149,13 @@ function updateMacrosRenderMeals(data) {
         renderMealsLi(meal, index);
         // console.log(data);
 
-        meals.push({ name: meal.name, calories: Math.round(meal.calories) });
+        meals.push({
+            name: meal.name,
+            calories: Math.round(meal.calories),
+            carbohydrates: Math.round(meal.carbohydrates_total_g),
+            fat: Math.round(meal.fat_total_g),
+            protein: Math.round(meal.protein_g),
+        });
         localStorage.setItem('meals', JSON.stringify(meals));
     });
 
@@ -180,11 +186,11 @@ mealForm.addEventListener('submit', (e) => {
 });
 
 mealList.addEventListener('click', (e) => {
-    if(e.target.tagName !== 'BUTTON') return;
+    if (e.target.tagName !== 'BUTTON') return;
     const index = parseInt(e.target.getAttribute('data-index'));
     meals.splice(index, 1);
     localStorage.setItem('meals', JSON.stringify(meals));
-    mealList.innerHTML='';
+    mealList.innerHTML = '';
     meals.forEach((meal, i) => renderMealsLi(meal, i));
 });
 

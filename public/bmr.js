@@ -9,11 +9,12 @@
 
 const calculateCalories = (profile) => {
     let basalMetabolicRate;
+    const baseCalories = 10 * parseInt(profile.weight) + 6.25 * parseInt(profile.height) - 5 * parseInt(profile.age)
 
     if (profile.gender === 'male') {
-        basalMetabolicRate = 10 * profile.weight + 6.25 * profile.height - 5 * profile.age + 5;
+        basalMetabolicRate = baseCalories + 5;
     } else {
-        basalMetabolicRate = 10 * profile.weight + 6.25 * profile.height - 5 * profile.age - 161;
+        basalMetabolicRate = baseCalories - 161;
     }
 
     const activityMultipliers = {
@@ -25,6 +26,10 @@ const calculateCalories = (profile) => {
     }
 
     const totalDailyCalories = basalMetabolicRate * activityMultipliers[profile.activityLevel];
-    return totalDailyCalories;
+    let goalAdjustment = 0;
+    if (profile.goal === 'lose') goalAdjustment = -200;
+    if (profile.goal === 'gain') goalAdjustment = 200;
+
+    return (totalDailyCalories + goalAdjustment);
 }
 

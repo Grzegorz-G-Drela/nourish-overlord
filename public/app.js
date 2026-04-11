@@ -31,8 +31,16 @@ const saveBtn = document.querySelector('#save-btn');
 const loadBtn = document.querySelector('#load-btn');
 const fileInput = document.querySelector('#file-input');
 
+
+//           ##############################################
+//           #############   LOCAL STORAGE   ##############
+//           ##############################################
+
 let meals = JSON.parse(localStorage.getItem('meals')) || [];
 meals.forEach((meal, index) => renderMealsLi(meal, index));
+
+let activities = JSON.parse(localStorage.getItem('activities')) || [];
+activities.forEach(activity => renderActivityLi(activity));
 
 
 //           ##########################################
@@ -50,6 +58,11 @@ function renderMealsLi(meal, index) {
 
     li.appendChild(deleteBtn);
     mealList.appendChild(li);
+}
+
+function renderActivityLi(activity) {
+    const li = document.createElement('li');
+    li.textContent = `${activity.date} | ${activity.name} | ${activity.duration} | ${activity.burned} kcal`;
 }
 
 
@@ -201,34 +214,34 @@ mealList.addEventListener('click', (e) => {
 
 activityForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const activity = activityType.value;
+    const activityName = activityType.value;
     const duration = activityDuration.value;
-
-    function addActivity(activity, duration, burned) {
-        const addedActivity = document.createElement('li');
-        let durationConverted;
-        let date = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-
-        if (duration >= 60) {
-            durationConverted = `${Math.floor(duration / 60)}h ${duration % 60}m`;
-        } else {
-            durationConverted = `${duration} min`;
-        }
-
-        addedActivity.textContent = `${date} | ${activity} | ${durationConverted} | ${burned}kcal`; // add todays date in front, if multiple activities this day, just group them
-        activityList.appendChild(addedActivity);
-    }
 
     fetch('http://localhost:3000/api/burned', {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify({ activity, duration })
+        body: JSON.stringify({ activity: activityName, duration })
     })
         .then(response => response.json())
         .then(data => {
             caloriesBurned.textContent = data.burned;
-            let burned = data.burned;
-            addActivity(activity, duration, burned);
+
+            let date = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+            let durationConverted = duration >= 60
+                ? `${Math.floor(duration / 60)}h ${duration % 60}m`
+                : `${duration}m`;
+
+            const activity = {
+                date,
+                name: activityName,
+                duration: durationConverted,
+                burned: data.burned,
+            };
+
+            activities.push(activity);
+            localStorage.setItem('activities', JSON.stringify(activities));
+            renderActivityLi(activity);
+
             console.log(data);
         });
 

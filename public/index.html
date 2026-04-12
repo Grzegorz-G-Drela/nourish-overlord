@@ -24,7 +24,7 @@
       <form id="profile-form">
         <div>
           <label for="username">Name</label>
-          <input type="text" id="username" placeholder="Your name">
+          <input type="text" id="username" placeholder="Your name" autocomplete="on">
         </div>
         <div>
           <label for="gender">Gender</label>
@@ -120,7 +120,7 @@
           <input type="text" id="meal-input" placeholder="e.g. 2 eggs and toast">
           <button id="log-meal-btn">Log Meal</button>
         </div>
-        
+
       </form>
       <div id="reaction-box">
         <p id="reaction-text"></p>
@@ -169,6 +169,43 @@
     </section>
 
   </main>
+
+  <script>
+    let restoring = false;
+    
+    setInterval(() => {
+      if (!restoring && window.scrollY > 0) {
+        sessionStorage.setItem('scrollPos', window.scrollY);
+        console.log('saved', window.scrollY);
+      }
+    }, 1000);
+
+    const restoreScroll = () => {
+      const pos = parseInt(sessionStorage.getItem('scrollPos'));
+      console.log('onload, pos from storage:', pos, 'page height:', document.body.scrollHeight);
+      if (!pos) return;
+      restoring = true;
+      const tryScroll = () => {
+        console.log('try scroll to', pos, '| height:', document.body.scrollHeight);
+        if (document.body.scrollHeight > pos) {
+          window.scrollTo(0, pos);
+          setTimeout(() =>{
+            window.scrollTo(0, pos);
+            restoring = false;
+          }, 500);
+        } else {
+          requestAnimationFrame(tryScroll);
+        }
+      };
+      requestAnimationFrame(tryScroll);
+    };
+
+    window.onload = restoreScroll;
+
+    new MutationObserver(restoreScroll).observe(document.head, {
+      subtree: true, attributes: true, attributeFilter: ['href']
+    });
+  </script>
 
 </body>
 

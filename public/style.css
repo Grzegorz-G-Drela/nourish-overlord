@@ -97,6 +97,27 @@ button:hover {
     background-color: var(--accent-hover);
 }
 
+button[data-index] {
+    /* margin-left: 20px; */
+    padding: 5px 10px;
+    background-color: rgba(156, 30, 30, 0.658);
+}
+
+button[data-index]:hover {
+    background-color: rgba(156, 30, 30, 0.849);
+}
+
+#meal-list>li {
+    display: grid;
+    grid-template-columns: 240px 110px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#meal-list>li>button {
+    margin: 5px 20px;
+}
+
 #dashboard-section {
     display: flex;
     column-gap: 50px;
@@ -259,7 +280,7 @@ body[data-theme='peasant'] {
     --text: #3d2b00;
     --accent: #8b5e00;
     --accent-hover: #6b4800;
-    
+
     font-family: 'Georgia', serif;
 }
 
@@ -281,7 +302,7 @@ body[data-theme='therapist'] {
     --text: #3d2952;
     --accent: #9b59b6;
     --accent-hover: #7d3f9e;
-    
+
     font-family: 'Georgia', serif;
 }
 

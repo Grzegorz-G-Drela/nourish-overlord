@@ -39,7 +39,7 @@ const fileInput = document.querySelector('#file-input');
 //           ##############################################
 
 let meals = JSON.parse(localStorage.getItem('meals')) || [];
-meals.forEach((meal, index) => renderMealsLi(meal, index));
+meals.forEach((meal, index) => renderMealLi(meal, index));
 
 let activities = JSON.parse(localStorage.getItem('activities')) || [];
 activities.forEach(activity => renderActivityLi(activity));
@@ -51,9 +51,9 @@ activities.forEach(activity => renderActivityLi(activity));
 //           ##############   RENDER   ################
 //           ##########################################
 
-function renderMealsLi(meal, index) {
+function renderMealLi(meal, index) {
     const li = document.createElement('li');
-    li.textContent = `${meal.name} - ${Math.round(meal.calories)} kcal`;
+    li.textContent = `${meal.name} | ${meal.serving}g | ${Math.round(meal.calories)} kcal`;
 
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = "Delete";
@@ -154,16 +154,17 @@ function refreshDashboard() {
 
 function handleMealData(data) {
     data.items.forEach(meal => {
-        let index = meals.length;
-        renderMealsLi(meal, index);
-
         meals.push({
             name: meal.name,
             calories: Math.round(meal.calories),
             carbs: Math.round(meal.carbohydrates_total_g),
             fat: Math.round(meal.fat_total_g),
             protein: Math.round(meal.protein_g),
+            serving: meal.serving_size_g,
         });
+
+        let index = meals.length - 1;
+        renderMealLi(meal[index], index);
     });
 
     localStorage.setItem('meals', JSON.stringify(meals));
@@ -188,13 +189,15 @@ mealForm.addEventListener('submit', (e) => {
         });
 });
 
+//                 DELETE MEAL BUTTON
+
 mealList.addEventListener('click', (e) => {
     if (e.target.tagName !== 'BUTTON') return;
     const index = parseInt(e.target.getAttribute('data-index'));
     meals.splice(index, 1);
     localStorage.setItem('meals', JSON.stringify(meals));
     mealList.replaceChildren();
-    meals.forEach((meal, i) => renderMealsLi(meal, i));
+    meals.forEach((meal, i) => renderMealLi(meal, i));
 });
 
 
@@ -238,42 +241,4 @@ activityForm.addEventListener('submit', (e) => {
         });
 
 });
-
-
-
-
-//           ##########################################
-//           ###########   SAVE / LOAD   ##############
-//           ##########################################
-
-function saveData() {
-    const data = JSON.stringify(localStorage);
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'nourish-overlord-data.json';
-    a.click();
-    URL.revokeObjectURL(url);
-}
-
-saveBtn.addEventListener('click', saveData);
-
-function loadData() {
-    fileInput.click();
-}
-
-fileInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        const data = JSON.parse(e.target.result);
-        Object.keys(data).forEach(key => {
-            localStorage.setItem(key, data[key]);
-        });
-    };
-    reader.readAsText(file);
-});
-
-loadBtn.addEventListener('click', loadData);
 

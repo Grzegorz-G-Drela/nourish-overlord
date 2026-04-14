@@ -40,10 +40,8 @@ const fileInput = document.querySelector('#file-input');
 
 
 let meals = JSON.parse(localStorage.getItem('meals')) || [];
-meals.forEach((meal, index) => renderMealItem(meal, index));
 
 let activities = JSON.parse(localStorage.getItem('activities')) || [];
-activities.forEach(activity => renderActivityItem(activity));
 
 let storedProfile = localStorage.getItem('profile');
 let profile = JSON.parse(storedProfile) || {};
@@ -51,6 +49,16 @@ let profile = JSON.parse(storedProfile) || {};
 
 
 // RENDER -----------------------------------------------------------------------------------------------
+
+function saveMeals() {
+    localStorage.setItem('meals', JSON.stringify(meals));
+    refreshDashboard();
+}
+
+function saveActivities() {
+    localStorage.setItem('activities', JSON.stringify(activities));
+    refreshDashboard();
+}
 
 function createDeleteBtn(index) {
     const deleteBtn = document.createElement('button');
@@ -93,25 +101,12 @@ function refreshDashboard() {
 
 
 
-// RENDER -----------------------------------------------------------------------------------------------
+// PROFILE -----------------------------------------------------------------------------------------------
 
 
 function updateTotalCalories(profile) {
     const totalDailyCalories = calculateCalories(profile);
     calorieTarget.textContent = Math.round(totalDailyCalories / 50) * 50;
-}
-
-if (profile.username) {
-    username.value = profile.username;
-    gender.value = profile.gender;
-    age.value = profile.age;
-    weight.value = profile.weight;
-    height.value = profile.height;
-    goal.value = profile.goal;
-    activityLevel.value = profile.activityLevel;
-
-    updateTotalCalories(profile);
-    refreshDashboard();
 }
 
 profileForm.addEventListener('submit', (e) => {
@@ -133,7 +128,7 @@ profileForm.addEventListener('submit', (e) => {
 
 
 
-// RENDER -----------------------------------------------------------------------------------------------
+// DASHBOARD -----------------------------------------------------------------------------------------------
 
 
 overlordFieldset.addEventListener('change', (e) => {
@@ -143,7 +138,7 @@ overlordFieldset.addEventListener('change', (e) => {
 
 
 
-// RENDER -----------------------------------------------------------------------------------------------
+// MEALS -----------------------------------------------------------------------------------------------
 
 function onMealResponse(data) {
     data.items.forEach(meal => {
@@ -160,8 +155,7 @@ function onMealResponse(data) {
         renderMealItem(meals[index], index);
     });
 
-    localStorage.setItem('meals', JSON.stringify(meals));
-    refreshDashboard();
+    saveMeals();
     reactionText.textContent = data.reaction;
 }
 
@@ -189,14 +183,14 @@ mealSummaryList.addEventListener('click', (e) => {
     if (e.target.tagName !== 'BUTTON') return;
     const index = parseInt(e.target.getAttribute('data-index'));
     meals.splice(index, 1);
-    localStorage.setItem('meals', JSON.stringify(meals));
+    saveMeals();
     mealSummaryList.replaceChildren();
     meals.forEach((meal, i) => renderMealItem(meal, i));
 });
 
 
 
-// RENDER -----------------------------------------------------------------------------------------------
+// ACTIVITY -----------------------------------------------------------------------------------------------
 
 activityForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -225,7 +219,7 @@ activityForm.addEventListener('submit', (e) => {
             };
 
             activities.push(activity);
-            localStorage.setItem('activities', JSON.stringify(activities));
+            saveActivities();
             renderActivityItem(activity);
 
             console.log(data);
@@ -233,3 +227,22 @@ activityForm.addEventListener('submit', (e) => {
 
 });
 
+
+
+// INIT -----------------------------------------------------------------------------------------------
+
+meals.forEach((meal, index) => renderMealItem(meal, index));
+activities.forEach(activity => renderActivityItem(activity));
+
+if (profile.username) {
+    username.value = profile.username;
+    gender.value = profile.gender;
+    age.value = profile.age;
+    weight.value = profile.weight;
+    height.value = profile.height;
+    goal.value = profile.goal;
+    activityLevel.value = profile.activityLevel;
+
+    updateTotalCalories(profile);
+    refreshDashboard();
+}

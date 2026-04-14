@@ -147,12 +147,6 @@
     <section id="summary-section">
       <div class="top-div">
         <h2>Daily Summary</h2>
-        <div id="recently-deleted-div">
-          <label for="recently-deleted">Deleted</label>
-          <select id="recently-deleted">
-            <option value="None">None</option>
-          </select>
-        </div>
       </div>
       <div id="summary-content">
         <ul id="meal-list">
@@ -173,7 +167,7 @@
 
   <script>
     let restoring = false;
-    
+
     setInterval(() => {
       if (!restoring && window.scrollY > 0) {
         sessionStorage.setItem('scrollPos', window.scrollY);
@@ -190,7 +184,7 @@
         console.log('try scroll to', pos, '| height:', document.body.scrollHeight);
         if (document.body.scrollHeight > pos) {
           window.scrollTo(0, pos);
-          setTimeout(() =>{
+          setTimeout(() => {
             window.scrollTo(0, pos);
             restoring = false;
           }, 500);

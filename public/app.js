@@ -96,6 +96,8 @@ function refreshDashboard() {
         totalCarbs += meal.carbs;
         totalProtein += meal.protein;
     });
+    const totalBurned = activities.reduce((total, a) => total + a.burned, 0);
+    caloriesBurned.textContent = totalBurned;
     renderDashboard(totalCalories, totalFat, totalCarbs, totalProtein);
 }
 

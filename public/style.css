@@ -169,10 +169,6 @@ fieldset>div {
     display: flex;
 }
 
-#recently-deleted-div {
-    margin-left: auto;
-}
-
 #meal-section input,
 #activity-section input {
     flex: 1;

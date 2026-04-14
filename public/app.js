@@ -1,3 +1,5 @@
+// DOM SELECTORS ---------------------------------------------------------------------------------------
+
 const profileForm = document.querySelector('#profile-form');
 const username = document.querySelector('#username');
 const gender = document.querySelector('#gender');
@@ -17,8 +19,9 @@ const caloriesRemaining = document.querySelector('#calories-remaining span:nth-c
 
 const overlordFieldset = document.querySelector('#overlord');
 const mealForm = document.querySelector('#meal-form');
+console.log('meal-form');
 const mealInput = document.querySelector('#meal-input')
-const mealList = document.querySelector('#meal-list');
+const mealSummaryList = document.querySelector('#meal-list');
 
 const reactionText = document.querySelector('#reaction-text');
 
@@ -33,38 +36,37 @@ const fileInput = document.querySelector('#file-input');
 
 
 
+// STATE -----------------------------------------------------------------------------------------------
 
-//           ##############################################
-//           #############   LOCAL STORAGE   ##############
-//           ##############################################
 
 let meals = JSON.parse(localStorage.getItem('meals')) || [];
-meals.forEach((meal, index) => renderMealLi(meal, index));
+meals.forEach((meal, index) => renderMealItem(meal, index));
 
 let activities = JSON.parse(localStorage.getItem('activities')) || [];
-activities.forEach(activity => renderActivityLi(activity));
+activities.forEach(activity => renderActivityItem(activity));
+
+let storedProfile = localStorage.getItem('profile');
+let profile = JSON.parse(storedProfile) || {};
 
 
 
+// RENDER -----------------------------------------------------------------------------------------------
 
-//           ##########################################
-//           ##############   RENDER   ################
-//           ##########################################
-
-function renderMealLi(meal, index) {
-    const li = document.createElement('li');
-    li.textContent = `${meal.name} | ${meal.serving}g | ${Math.round(meal.calories)} kcal`;
-
+function createDeleteBtn(index) {
     const deleteBtn = document.createElement('button');
-    deleteBtn.textContent = "Delete";
+    deleteBtn.textContent = 'Delete';
     deleteBtn.setAttribute('data-index', index);
-    deleteBtn.style.leftMargin = "auto";
-
-    li.appendChild(deleteBtn);
-    mealList.appendChild(li);
+    return deleteBtn;
 }
 
-function renderActivityLi(activity) {
+function renderMealItem(meal, index) {
+    const li = document.createElement('li');
+    li.textContent = `${meal.name} | ${meal.serving}g | ${Math.round(meal.calories)} kcal`;
+    li.appendChild(createDeleteBtn(index));
+    mealSummaryList.appendChild(li);
+}
+
+function renderActivityItem(activity) {
     const li = document.createElement('li');
     li.textContent = `${activity.date} | ${activity.name} | ${activity.duration} | ${activity.burned} kcal`;
     activityList.appendChild(li);
@@ -78,20 +80,27 @@ function renderDashboard(calories, fat, carbs, protein) {
     caloriesRemaining.textContent = Math.round(calorieTarget.textContent) - calories;
 }
 
+function refreshDashboard() {
+    let totalCalories = 0, totalFat = 0, totalCarbs = 0, totalProtein = 0;
+    meals.forEach(meal => {
+        totalCalories += meal.calories;
+        totalFat += meal.fat;
+        totalCarbs += meal.carbs;
+        totalProtein += meal.protein;
+    });
+    renderDashboard(totalCalories, totalFat, totalCarbs, totalProtein);
+}
 
 
 
-//           ##########################################
-//           #############   PROFILE   ################
-//           ##########################################
+// RENDER -----------------------------------------------------------------------------------------------
+
 
 function updateTotalCalories(profile) {
     const totalDailyCalories = calculateCalories(profile);
     calorieTarget.textContent = Math.round(totalDailyCalories / 50) * 50;
 }
 
-let storedProfile = localStorage.getItem('profile');
-let profile = JSON.parse(storedProfile) || {};
 if (profile.username) {
     username.value = profile.username;
     gender.value = profile.gender;
@@ -124,35 +133,19 @@ profileForm.addEventListener('submit', (e) => {
 
 
 
+// RENDER -----------------------------------------------------------------------------------------------
 
-//           ##########################################
-//           #############   DASHBOARD   ##############
-//           ##########################################
 
 overlordFieldset.addEventListener('change', (e) => {
     document.body.setAttribute('data-theme', e.target.value);
     reactionText.textContent = '';
 });
 
-function refreshDashboard() {
-    let totalCalories = 0, totalFat = 0, totalCarbs = 0, totalProtein = 0;
-    meals.forEach(meal => {
-        totalCalories += meal.calories;
-        totalFat += meal.fat;
-        totalCarbs += meal.carbs;
-        totalProtein += meal.protein;
-    });
-    renderDashboard(totalCalories, totalFat, totalCarbs, totalProtein);
-}
 
 
+// RENDER -----------------------------------------------------------------------------------------------
 
-
-//           ########################################
-//           #############   MEALS   ################
-//           ########################################
-
-function handleMealData(data) {
+function onMealResponse(data) {
     data.items.forEach(meal => {
         meals.push({
             name: meal.name,
@@ -164,7 +157,7 @@ function handleMealData(data) {
         });
 
         let index = meals.length - 1;
-        renderMealLi(meal[index], index);
+        renderMealItem(meals[index], index);
     });
 
     localStorage.setItem('meals', JSON.stringify(meals));
@@ -173,6 +166,7 @@ function handleMealData(data) {
 }
 
 mealForm.addEventListener('submit', (e) => {
+    console.log('submitting');
     e.preventDefault();
     const mealDescription = mealInput.value;
     const selectedPersona = document.querySelector('#overlord input[name="overlord"]:checked').value;
@@ -184,28 +178,25 @@ mealForm.addEventListener('submit', (e) => {
     })
         .then(response => response.json())
         .then(data => {
-            handleMealData(data);
+            onMealResponse(data);
             console.log(data);
         });
 });
 
 //                 DELETE MEAL BUTTON
 
-mealList.addEventListener('click', (e) => {
+mealSummaryList.addEventListener('click', (e) => {
     if (e.target.tagName !== 'BUTTON') return;
     const index = parseInt(e.target.getAttribute('data-index'));
     meals.splice(index, 1);
     localStorage.setItem('meals', JSON.stringify(meals));
-    mealList.replaceChildren();
-    meals.forEach((meal, i) => renderMealLi(meal, i));
+    mealSummaryList.replaceChildren();
+    meals.forEach((meal, i) => renderMealItem(meal, i));
 });
 
 
 
-
-//           ###########################################
-//           #############   ACTIVITY   ################
-//           ###########################################
+// RENDER -----------------------------------------------------------------------------------------------
 
 activityForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -235,7 +226,7 @@ activityForm.addEventListener('submit', (e) => {
 
             activities.push(activity);
             localStorage.setItem('activities', JSON.stringify(activities));
-            renderActivityLi(activity);
+            renderActivityItem(activity);
 
             console.log(data);
         });

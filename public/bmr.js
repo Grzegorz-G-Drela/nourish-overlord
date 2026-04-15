@@ -1,3 +1,5 @@
+/* exported calculateCalories */
+
 const calculateCalories = (profile) => {
     let basalMetabolicRate;
     const baseCalories = 10 * parseInt(profile.weight) + 6.25 * parseInt(profile.height) - 5 * parseInt(profile.age)

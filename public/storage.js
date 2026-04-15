@@ -1,3 +1,8 @@
+const saveBtn = document.querySelector('#save-btn');
+const loadBtn = document.querySelector('#load-btn');
+const fileInput = document.querySelector('#file-input');
+
+
 function saveData() {
     const data = JSON.stringify(localStorage);
     const blob = new Blob([data], { type: 'application/json' });

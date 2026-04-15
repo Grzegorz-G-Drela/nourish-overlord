@@ -1,3 +1,5 @@
+/* global calculateCalories */
+
 // DOM SELECTORS ---------------------------------------------------------------------------------------
 
 const profileForm = document.querySelector('#profile-form');
@@ -29,10 +31,6 @@ const activityForm = document.querySelector('#activity-form');
 const activityType = document.querySelector('#activity-type');
 const activityDuration = document.querySelector('#activity-duration');
 const activityList = document.querySelector('#activity-list');
-
-const saveBtn = document.querySelector('#save-btn');
-const loadBtn = document.querySelector('#load-btn');
-const fileInput = document.querySelector('#file-input');
 
 
 

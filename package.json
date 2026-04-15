@@ -2,11 +2,12 @@
   "name": "nourish-overlord",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "jest",
+    "start": "node server.js",
     "dev": "nodemon server.js",
-    "lint": "eslint public/app.js public/storage.js public/bmr.js server.js"
+    "lint": "eslint public/app.js public/storage.js public/bmr.js server.js",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",

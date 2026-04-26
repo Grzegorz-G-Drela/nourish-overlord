@@ -165,7 +165,7 @@ mealForm.addEventListener('submit', (e) => {
     const mealDescription = mealInput.value;
     const selectedPersona = document.querySelector('#overlord input[name="overlord"]:checked').value;
 
-    fetch('http://localhost:3000/api/meal', {
+    fetch('/api/meal', {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({ mealDescription, persona: selectedPersona }),
@@ -197,7 +197,7 @@ activityForm.addEventListener('submit', (e) => {
     const activityName = activityType.value;
     const duration = activityDuration.value;
 
-    fetch('http://localhost:3000/api/burned', {
+    fetch('/api/burned', {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({ activity: activityName, duration })
